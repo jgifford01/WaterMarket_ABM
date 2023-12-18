@@ -32,12 +32,11 @@ Any advise for common problems or issues.
 command to run if program contains helper info
 ```
 
+##FAQ
+
+
 ## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+name@wsu.edu
 
 ## Version History
 
