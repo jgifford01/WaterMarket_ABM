@@ -2,14 +2,13 @@
 An agent-based model of agricultural water markets under appropriative rights and droughts. Includes bilateral and multilateral trading structures. 
 
 ## Description
-
-An agent-based model of agricultural water markets under appropriative rights and droughts has been developed. The model is developed to simulate possible water rights trading between water rights holders drawing water from a river for agricultural purposes. Depending upon the severity of the drought, certain water rights are curtailed for that season. Using Bilateral (random matching of water rights holders) and Smart Market (active matching of water rights holders by a market manager) trade frameworks, the ABM simulates interactions between water rights holders and figures the most efficient condition to generate maximum gains from trade. Focusing on non-pecuniary factors that might affect trading decisions, a dynamic structure to the general model has been developed to study the economic impacts caused due to preferences of water right holders not to participate in agricultural water markets.
+The model is developed to simulate possible water rights trading between water rights holders drawing water from a river for agricultural purposes. Depending upon the severity of the drought, certain water rights are curtailed for that season. Using Bilateral (random matching of water rights holders) and Smart Market (active matching of water rights holders by a market manager) trade frameworks, the ABM simulates interactions between water rights holders and figures the most efficient condition to generate maximum gains from trade. Focusing on non-pecuniary factors that might affect trading decisions, a dynamic structure to the general model has been developed to study the economic impacts caused due to preferences of water right holders not to participate in agricultural water markets.
 
 ## Getting Started
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
+* MESA package (https://mesa.readthedocs.io/en/stable/overview.html)
 * ex. Windows 10
 
 ### Installing
@@ -34,9 +33,13 @@ command to run if program contains helper info
 
 ## FAQ
 
+## Example
+https://github.com/projectmesa/mesa-examples/tree/main/examples/schelling
 
 ## Authors
 name@wsu.edu
+
+## Further Reading
 
 ## Version History
 
