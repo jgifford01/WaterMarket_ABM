@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 Jacob Gifford
+Copyright (c) 2023 Reetwika Basu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
