@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.time import BaseScheduler
