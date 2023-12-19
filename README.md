@@ -1,3 +1,4 @@
+test:
 Sources for creating readme:
 https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
 https://docs.github.com/en/contributing/style-guide-and-content-model/style-guide
