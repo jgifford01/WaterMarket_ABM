@@ -1,4 +1,3 @@
-#test merge 7
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
