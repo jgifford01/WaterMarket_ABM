@@ -11,9 +11,7 @@ import random
 import pandas as pd
 from itertools import product
 
-#a_once=input("How many agents? : ")
-
-perc_sellers=[10,20,30,40,50,60,70,80,90]
+perc_sellers=[10,20,30,40,50,60,70,80,90] #These correspond to the dr_num variable -> 10%,20%,...,90% of sellers ==50,100,...,450
 pvi_all=[]
 trade_percent_all=[]
 water_held_all_s=[]
