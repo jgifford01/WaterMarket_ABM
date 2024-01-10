@@ -1,4 +1,8 @@
-# Check out https://github.com/econ-ark/HARK/blob/master/README.md
+"""
+01/10/2024 Notes:
+- maybe we want to eliminate the interation through drought profiles for the final package, obiviously we need to keep it for the paper
+
+"""
 
 #########################################################################
 # Preamble
@@ -33,10 +37,10 @@ av_all_b=[] # average value of water held by buyers
 # gains from trade after 10 iterations
 gft_all_old=[] # same as gft_tot_old
 gft_all_new=[] # same as gft_tot_new
+dr_num=[50,100,150,200,250,300,350,400,450] # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
 
 # Runs simulation for each drough scenario (varying numbers of sellers) !Outer loop!
 for ppp in range(10): # model will run through the simulation 10 times 
-	dr_num=[50,100,150,200,250,300,350,400,450] # if 50, agents 1-50 are sellers, and 51-500 are buyers
 	gft_tot_old=[] # same as gft_all_old
 	gft_tot_new=[] # same as gft_all_new
 	trade_percent=[] # same as trade_percent_all
@@ -53,9 +57,17 @@ for ppp in range(10): # model will run through the simulation 10 times
 		for ii in range(500):
 			##main simulation portion
 			print('Try number: ',ii+1)
-			class MyAgent(Agent): #Agent Class
+			class MyAgent(Agent): #Agent Class, this is an additional class from the mesa packaqge that is being called from within this class. This is called inheritence. The MyAgent class inherits all of the methods and attributes from the mesa.Agent class
 				def __init__(self, unique_id, model,AV,endow,slope,intercept,c_b,w_b,allow_h2o,conu,exo_price,conur,h2o,ret,distrib_comb,techno,senior,field,tot_h2o,river_m,yield_agents,revenue,pr_wtp,pr_wta,pr_bid,pr_ask):
-					super().__init__(unique_id, model)
+					super().__init__(unique_id, model) # This line is typically used when you're inheriting from a parent class, and you want to initialize the attributes of the parent class before adding or modifying attributes specific to the child class. In this case, the parent class is mesa.Agent
+					"""
+					Unique id is assigned to each agent, AV stands for average value, endow = c, slope and intercept stands for the same from the yield equation in the
+					ABM, c_b = cbar, w_b = ̅wbar$, allow_h2o = allowable water to divert for each water right, exo_price = exogenous price, conur = consumptive use rate,
+					h20 =actual water withdrawn, ret = return flow, distrib_combo = the array that determines the exact location of the diversion of a water right along 
+					a river, techno = technology, senior = seniority rank, field = land acreage, tot_h2o = h20 =actual water withdrawn * land acreage, river_m = river miles, 
+					yield is the production of the crop portfolio, revenue is the revenue generated from selling or purchasing a water right, pr_wtp = Willingness to Pay,
+					pr_wta = Willingness to accept, pr_bid =Bid Price and pr_ask = Ask Price
+					"""
 					self.AV = AV
 					self.endow = endow
 					self.slope = slope
@@ -311,7 +323,7 @@ for ppp in range(10): # model will run through the simulation 10 times
 
 			num_of_agents=num_agents #int(no_sen+yes_sen) #total agents
 			# Why are we setting all of these inside of the for loop? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			dr_no =int(dr_num[jj]) #int(num_of_agents/2 +1 ) #random.randint(1,num_of_agents) # #
+			dr_no =int(dr_num[jj]) #int(num_of_agents/2 +1 ) #random.randint(1,num_of_agents) # # 
 			print('Random drought number is: ',dr_no)
 			num_list=[0.625,1.25,1.875,2.5,3.125,3.75,4.375,5]#[10,50,70,90] #list of consumptive uses
 			ex_price_list=[1,2,3,4,5,6,7,8] #crop list // it could be cool to add a random variable here rather than a list
