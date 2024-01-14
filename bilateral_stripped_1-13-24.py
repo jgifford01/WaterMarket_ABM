@@ -10,6 +10,11 @@ https://hpc.wsu.edu/programmers-guide/python/
 - how do we compare welfare of no drought at all, if GFT is our only metric?
 in
 
+time under pd concat: Time taken for simulation 1:  30.93202233314514
+time under original: Time taken for simulation 1:  48.66238355636597
+started pep-8 spacing rule
+
+
 
 """
 
@@ -25,8 +30,12 @@ import numpy as np
 from matplotlib.pyplot import *
 import random
 import pandas as pd
+import time
 
-
+start_time = time.time()
+print('###############################')
+print('simulation begins')
+print('###############################')
 #########################################################################
 # Global variables
 #########################################################################
@@ -44,8 +53,8 @@ av_all_b=[] # average value of water held by buyers
 # gains from trade after 10 iterations
 gft_all_old=[] # same as gft_tot_old
 gft_all_new=[] # same as gft_tot_new
-num_agents = int(500) #  determining the number of agents?
-dr_num = int(25) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
+num_agents = int(100) #  determining the number of agents?
+dr_num = int(60) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
 perc_sellers = dr_num/num_agents #Percentage sellers indicate that out of 500 agents 10% or 20% are sellers: 10% sellers = 50 sellers and 450 buyers. These correspond to the dr_num variable -> 10%,20%,...,90% of sellers ==50,100,...,450
 dr_severity = 1-perc_sellers
 gft_tot_old=[] # same as gft_all_old
@@ -568,37 +577,7 @@ for i in range(num_of_agents):
 		qq_gft.append(sum(all_agent_gain[i]))
 print('Total Gain from Trade: ',sum(qq_gft))
 
-"""
-if sum(qq_gft) != 0: #else, repeat loop
-	my_dict={'Step':x}
-	df = pd.DataFrame(my_dict)
-	for j in range(num_of_agents):
-		qq = all_agent_price1[j]
-		rr = all_agent_endow[j]
-		ss = all_agent_price2[j]
-		tt = all_agent_slope[j]
-		uu = all_agent_intercept[j]
-		vv = all_agent_AV[j]
-		ww = all_agent_gain[j]
-		xx = all_agent_conu[j]
-		eee = all_agent_c_bar[j]
-		ggg = all_agent_allow_water[j]
-		kkk = all_agent_seniority[j]
-		df['Agent'+str(j+1)+'_Buying_Price'] = qq
-		df['Agent'+str(j+1)+'_Selling_Price'] = ss
-		df['Agent'+str(j+1)+'_Consumptive_Use'] = rr
-		df['Agent'+str(j+1)+'_Slope']=tt
-		df['Agent'+str(j+1)+'_Intercept']=uu
-		df['Agent'+str(j+1)+'_AV']=vv
-		df['Agent'+str(j+1)+'_Gain']=ww
-		df['Agent'+str(j+1)+'_Crop_based_Consumptive_Use']=xx
-		df['Agent'+str(j+1)+'_c_bar']=eee
-		df['Agent'+str(j+1)+'_Allowable_Water']=ggg
-		df['Agent'+str(j+1)+'_Seniority']=kkk
-
-	df.to_csv('all_agents_data_pos_try23_dr_no.csv',index=False)
-"""
-#Test 
+### I rewrote this section. Saves 18 seconds of time
 if sum(qq_gft) != 0:  # else, repeat loop
     my_dict = {'Step': x}
     df = pd.DataFrame(my_dict)
@@ -623,7 +602,7 @@ if sum(qq_gft) != 0:  # else, repeat loop
 
     df.to_csv('all_agents_data_pos_try23_dr_no.csv', index=False)
 
-### TEst End
+
     gft_tot_new.append(sum(qq_gft))
     count_s=0
     count_b=0
@@ -713,6 +692,11 @@ if sum(qq_gft) != 0:  # else, repeat loop
             water_allow_b.append(all_agent_allow_water[i][0])
     water_allow_tot_b.append(sum(water_allow_b))
 	
+
+    print('-------------------')
+    print('The model shows trade')
+    print('-------------------')
+
     print('Total Initial AV for Sellers: ',sum(int_AV_s))
     print('Total Final AV for Sellers: ',sum(fin_AV_s))
     print('Total Initial AV for Buyers: ',sum(int_AV_b))
@@ -724,9 +708,7 @@ if sum(qq_gft) != 0:  # else, repeat loop
     print('Number of agents that are cut-off: ',(num_of_agents-dr_no+1)) #+no_sen,'(',num_of_agents-dr_no+1,'for drought number &',no_sen,'for no seniority)')
 
 
-    print('-------------------')
-    print('The model shows trade')
-    print('-------------------')
+
 	##ends here
 else:
 	print('failed')
@@ -745,11 +727,12 @@ gft_all_new.append(gft_tot_new)
 my_dict={'Percentage_of_Sellers':perc_sellers,'Percentage_of_Agents_Trading':trade_percent,'Consumptive_Use_Sellers':water_held_tot_s,'Consumptive_Use_Buyers':water_held_tot_b,'Volume_Quantity_Filled_Sellers':water_allow_tot_s,'Volume_Quantity_Filled_Buyers':water_allow_tot_b,'Initial_AV_Sellers':av_tot_s,'Initial_AV_Buyers':av_tot_b}
 df=pd.DataFrame(my_dict)
 df.to_csv('results_data_simulation1.csv',index=False)
+end_time = time.time()-start_time
+print('###############################')
+print('###############################')
+print('Done with simulation number 1 in ',end_time, 'seconds ')
+print('###############################')
+print('###############################')
 
-print('###############################')
-print('###############################')
-print('Done with simulation number 1: ')
-print('###############################')
-print('###############################')
 
 
