@@ -1,6 +1,9 @@
 """
 01/10/2024 Notes:
 - maybe we want to eliminate the interation through drought profiles for the final package, obiviously we need to keep it for the paper
+https://hpc.wsu.edu/programmers-guide/python/
+- run  each simulation through a separate core, before averaging. This will speed up the process. Multithreading//
+
 
 """
 
@@ -52,7 +55,7 @@ for ppp in range(10): # model will run through the simulation 10 times
 	av_tot_s=[] # same as av_all_s
 	av_tot_b=[] # same as av_all_b
 
-	for jj in range(len(dr_num)): # runs simulation 10 times for each drought number (each scenario)
+	for jj in range(len(dr_num)): # runs through each drought number (each scenario)
 		a_once=500
 		for ii in range(500):
 			##main simulation portion
@@ -92,12 +95,12 @@ for ppp in range(10): # model will run through the simulation 10 times
 					self.pr_wta=pr_wta
 					self.pr_bid=pr_bid
 					self.pr_ask=pr_ask
-					self.price1=0.0
-					self.price2=0.0
+					self.price1=0.0 #(Buying Price)
+					self.price2=0.0 #(Selling Price)
 					self.gain=0.0
-	
-				def trade(self):  # Trading Method
-					if self.senior<=dr_no-1:
+				
+				def trade(self):  # Trading Method, # Self defines instance of a class. We check for if trade can happen:
+					if self.senior<=dr_no-1: 
 						arr=[]
 						ww=self.model.schedule.get_agent_count()
 						for kk in range(ww):
@@ -119,7 +122,7 @@ for ppp in range(10): # model will run through the simulation 10 times
 						if len(arr)==0:
 							other_agent = self.random.choice(self.model.schedule.agents)
 
-					#CASE_1: self=Seller and other_agent=Buyer
+					#CASE_1: self=Seller and other_agent=Buyer # self=Seller and self.other_agent=Buyer (the self-agent picked is a seller and the other agent picked is a buyer)
 					if self.senior <= dr_no-1 and other_agent.senior > dr_no-1:
 						if self.AV < other_agent.AV and self.distrib_comb==other_agent.distrib_comb and self.river_m < other_agent.river_m and self.c_b <= (other_agent.c_b-other_agent.endow) and self.pr_ask <= other_agent.pr_wtp and other_agent.AV > 0.0:# and self.unique_id not in id_agent and other_agent.unique_id not in id_agent:
 							other_agent.pr_wtp=(other_agent.intercept-other_agent.slope*self.c_b)*self.c_b
