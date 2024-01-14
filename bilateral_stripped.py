@@ -8,6 +8,7 @@ https://hpc.wsu.edu/programmers-guide/python/
 - welfare costs of climate shocks.
 - run each drough number over one thread, then combine at end. Make it more efficient.
 - how do we compare welfare of no drought at all, if GFT is our only metric?
+in
 
 
 """
@@ -32,7 +33,6 @@ import pandas as pd
 random.seed(4) #random seed
 
 
-pvi_all=[] # percentage value increased
 trade_percent_all=[] #percent of agents who trade
 water_held_all_s=[] # qty of water held by sellers	
 water_held_all_b=[] # qty of water held by buyers
@@ -45,13 +45,12 @@ av_all_b=[] # average value of water held by buyers
 gft_all_old=[] # same as gft_tot_old
 gft_all_new=[] # same as gft_tot_new
 num_agents = int(500) #  determining the number of agents?
-dr_num = int(350) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
-perc_sellers = dr_num//num_agents #Percentage sellers indicate that out of 500 agents 10% or 20% are sellers: 10% sellers = 50 sellers and 450 buyers. These correspond to the dr_num variable -> 10%,20%,...,90% of sellers ==50,100,...,450
-
+dr_num = int(25) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
+perc_sellers = dr_num/num_agents #Percentage sellers indicate that out of 500 agents 10% or 20% are sellers: 10% sellers = 50 sellers and 450 buyers. These correspond to the dr_num variable -> 10%,20%,...,90% of sellers ==50,100,...,450
+dr_severity = 1-perc_sellers
 gft_tot_old=[] # same as gft_all_old
 gft_tot_new=[] # same as gft_all_new
 trade_percent=[] # same as trade_percent_all
-pvi=[] # same as pvi_all
 water_held_tot_b=[] # same as water_held_all_b
 water_allow_tot_b=[] # same as water_allow_all_b
 water_held_tot_s=[] # same as water_held_all_s
@@ -569,7 +568,7 @@ for i in range(num_of_agents):
 		qq_gft.append(sum(all_agent_gain[i]))
 print('Total Gain from Trade: ',sum(qq_gft))
 
-
+"""
 if sum(qq_gft) != 0: #else, repeat loop
 	my_dict={'Step':x}
 	df = pd.DataFrame(my_dict)
@@ -598,115 +597,145 @@ if sum(qq_gft) != 0: #else, repeat loop
 		df['Agent'+str(j+1)+'_Seniority']=kkk
 
 	df.to_csv('all_agents_data_pos_try23_dr_no.csv',index=False)
-	
-	gft_tot_new.append(sum(qq_gft))
+"""
+#Test 
+if sum(qq_gft) != 0:  # else, repeat loop
+    my_dict = {'Step': x}
+    df = pd.DataFrame(my_dict)
+    for j in range(num_of_agents):
+        qq = all_agent_price1[j]
+        rr = all_agent_endow[j]
+        ss = all_agent_price2[j]
+        tt = all_agent_slope[j]
+        uu = all_agent_intercept[j]
+        vv = all_agent_AV[j]
+        ww = all_agent_gain[j]
+        xx = all_agent_conu[j]
+        eee = all_agent_c_bar[j]
+        ggg = all_agent_allow_water[j]
+        kkk = all_agent_seniority[j]
+        df['Agent' + str(j + 1) + '_Buying_Price'] = qq
+        df['Agent' + str(j + 1) + '_Selling_Price'] = ss
+        df['Agent' + str(j + 1) + '_Consumptive_Use'] = rr
+        df['Agent' + str(j + 1) + '_Slope'] = tt
+        df['Agent' + str(j + 1) + '_Intercept'] = uu
+        df['Agent' + str(j + 1) + '_AV'] = vv
+        df['Agent' + str(j + 1) + '_Gain'] = ww
+        df['Agent' + str(j + 1) + '_Crop_based_Consumptive_Use'] = xx
+        df['Agent' + str(j + 1) + '_c_bar'] = eee
+        df['Agent' + str(j + 1) + '_Allowable_Water'] = ggg
+        df['Agent' + str(j + 1) + '_Seniority'] = kkk
 
-	count_s=0
-	count_b=0
-	indicator_s = np.zeros(num_of_agents)
-	for i in range(num_of_agents):
-		if sen_list[i]<=dr_no-1:
-			for j in range(iterations):
-				if all_agent_price2[i][j] != 0.0:
-					indicator_s[i] = 1
-	indicator_b = np.zeros(num_of_agents)
-	for i in range(num_of_agents):
-		if sen_list[i]>dr_no-1:
-			for j in range(iterations):
-				if all_agent_price1[i][j] != 0.0:
-					indicator_b[i] = 1
-	for i in range(len(indicator_s)):
-		if indicator_s[i] != 0.0:
-			count_s=count_s+1
-	for i in range(len(indicator_b)):
-		if indicator_b[i] != 0.0:
-			count_b=count_b+1
-	trade_percent.append(((count_s+count_b)/(num_of_agents))*100)
-	vat_b=[]
-	vbt_s=[]
-	for i in range(num_of_agents):
-		if sen_list[i]>dr_no-1:
-			abc=[]
-			for j in range(iterations):
-				if all_agent_price1[i][j] != 0.0:
-					abc.append(all_agent_AV[i][j+1]*all_agent_endow[i][j+1])
-			vat_b.append(np.sum(abc))
-	for i in range(num_of_agents):
-		if sen_list[i]<=dr_no-1:
-			abc=[]
-			for j in range(iterations):
-				if all_agent_price2[i][j] != 0.0:
-					abc.append(all_agent_AV[i][0]*all_agent_c_bar[i][0])
-			vbt_s.append(np.sum(abc))
+    df.to_csv('all_agents_data_pos_try23_dr_no.csv', index=False)
+### TEst End
+    gft_tot_new.append(sum(qq_gft))
+    count_s=0
+    count_b=0
+    indicator_s = np.zeros(num_of_agents)
+    for i in range(num_of_agents):
+        if sen_list[i]<=dr_no-1:
+            for j in range(iterations):
+                if all_agent_price2[i][j] != 0.0:
+                    indicator_s[i] = 1
+    indicator_b = np.zeros(num_of_agents)
+    for i in range(num_of_agents):
+        if sen_list[i]>dr_no-1:
+            for j in range(iterations):
+                if all_agent_price1[i][j] != 0.0:
+                    indicator_b[i] = 1
+    for i in range(len(indicator_s)):
+        if indicator_s[i] != 0.0:
+            count_s=count_s+1
+    for i in range(len(indicator_b)):
+        if indicator_b[i] != 0.0:
+            count_b=count_b+1
+    trade_percent.append(((count_s+count_b)/(num_of_agents))*100)
+    vat_b=[]
+    vbt_s=[]
+    for i in range(num_of_agents):
+        if sen_list[i]>dr_no-1:
+            abc=[]
+            for j in range(iterations):
+                if all_agent_price1[i][j] != 0.0:
+                    abc.append(all_agent_AV[i][j+1]*all_agent_endow[i][j+1])
+            vat_b.append(np.sum(abc))
+    for i in range(num_of_agents):
+        if sen_list[i]<=dr_no-1:
+            abc=[]
+            for j in range(iterations):
+                if all_agent_price2[i][j] != 0.0:
+                    abc.append(all_agent_AV[i][0]*all_agent_c_bar[i][0])
+            vbt_s.append(np.sum(abc))
 
 
 	##this prints total initial and final AV (before and after trade)
-	int_AV_s=[]
-	fin_AV_s=[]
-	int_AV_b=[]
-	fin_AV_b=[]
-	for i in range(num_of_agents):
-		if sen_list[i]<=dr_no-1:
-			int_AV_s.append(all_agent_AV[i][0]*all_agent_endow[i][0])
-			fin_AV_s.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
-		if sen_list[i]>dr_no-1:
-			int_AV_b.append(all_agent_AV[i][0]*all_agent_endow[i][0])
-			fin_AV_b.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
+    int_AV_s=[]
+    fin_AV_s=[]
+    int_AV_b=[]
+    fin_AV_b=[]
+    for i in range(num_of_agents):
+        if sen_list[i]<=dr_no-1:
+            int_AV_s.append(all_agent_AV[i][0]*all_agent_endow[i][0])
+            fin_AV_s.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
+        if sen_list[i]>dr_no-1:
+            int_AV_b.append(all_agent_AV[i][0]*all_agent_endow[i][0])
+            fin_AV_b.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
 			
-	av_cu_i=[]
-	av_cu_f=[]
-	for i in range(num_of_agents):
-		av_cu_i.append(all_agent_AV[i][0]*all_agent_endow[i][0])
-		av_cu_f.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
+    av_cu_i=[]
+    av_cu_f=[]
+    for i in range(num_of_agents):
+        av_cu_i.append(all_agent_AV[i][0]*all_agent_endow[i][0])
+        av_cu_f.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
 		
-	pvi.append((sum(qq_gft)/(sum(int_AV_s)+sum(int_AV_b)))*100)
-	av_tot_s.append(sum(int_AV_s))
-	av_tot_b.append(sum(int_AV_b))
-	gft_tot_old.append(sum(vat_b)-sum(vbt_s))
+
+    av_tot_s.append(sum(int_AV_s))
+    av_tot_b.append(sum(int_AV_b))
+    gft_tot_old.append(sum(vat_b)-sum(vbt_s))
 	
 
-	water_held_s=[]
-	for i in range(num_of_agents):
-		if sen_list[i]<=dr_no-1:
-			water_held_s.append(all_agent_conu[i][0])
-	water_held_tot_s.append(sum(water_held_s))
+    water_held_s=[]
+    for i in range(num_of_agents):
+        if sen_list[i]<=dr_no-1:
+            water_held_s.append(all_agent_conu[i][0])
+    water_held_tot_s.append(sum(water_held_s))
 
-	water_held_b=[]
-	for i in range(num_of_agents):
-		if sen_list[i]>dr_no-1:
-			water_held_b.append(all_agent_conu[i][0])
-	water_held_tot_b.append(sum(water_held_b))
+    water_held_b=[]
+    for i in range(num_of_agents):
+        if sen_list[i]>dr_no-1:
+            water_held_b.append(all_agent_conu[i][0])
+    water_held_tot_b.append(sum(water_held_b))
 
-	water_allow_s=[]
-	for i in range(num_of_agents):
-		if sen_list[i]<=dr_no-1:
-			water_allow_s.append(all_agent_allow_water[i][0])
-	water_allow_tot_s.append(sum(water_allow_s))
+    water_allow_s=[]
+    for i in range(num_of_agents):
+        if sen_list[i]<=dr_no-1:
+            water_allow_s.append(all_agent_allow_water[i][0])
+    water_allow_tot_s.append(sum(water_allow_s))
 
-	water_allow_b=[]
-	for i in range(num_of_agents):
-		if sen_list[i]>dr_no-1:
-			water_allow_b.append(all_agent_allow_water[i][0])
-	water_allow_tot_b.append(sum(water_allow_b))
+    water_allow_b=[]
+    for i in range(num_of_agents):
+        if sen_list[i]>dr_no-1:
+            water_allow_b.append(all_agent_allow_water[i][0])
+    water_allow_tot_b.append(sum(water_allow_b))
 	
-	print('Total Initial AV for Sellers: ',sum(int_AV_s))
-	print('Total Final AV for Sellers: ',sum(fin_AV_s))
-	print('Total Initial AV for Buyers: ',sum(int_AV_b))
-	print('Total Final AV for Buyers: ',sum(fin_AV_b))
-	print('Total Percentage of Agents Trading: ',trade_percent)
+    print('Total Initial AV for Sellers: ',sum(int_AV_s))
+    print('Total Final AV for Sellers: ',sum(fin_AV_s))
+    print('Total Initial AV for Buyers: ',sum(int_AV_b))
+    print('Total Final AV for Buyers: ',sum(fin_AV_b))
+    print('Total Percentage of Agents Trading: ',trade_percent)
+    print('drought severity:', dr_severity)
 
 	##this prints number of agents that are cut-off
-	print('Number of agents that are cut-off: ',(num_of_agents-dr_no+1)) #+no_sen,'(',num_of_agents-dr_no+1,'for drought number &',no_sen,'for no seniority)')
+    print('Number of agents that are cut-off: ',(num_of_agents-dr_no+1)) #+no_sen,'(',num_of_agents-dr_no+1,'for drought number &',no_sen,'for no seniority)')
 
 
-	print('-------------------')
-	print('The model shows trade')
-	print('-------------------')
+    print('-------------------')
+    print('The model shows trade')
+    print('-------------------')
 	##ends here
 else:
 	print('failed')
 
-pvi_all.append(pvi)
+
 trade_percent_all.append(trade_percent)
 water_held_all_s.append(water_held_tot_s)
 water_held_all_b.append(water_held_tot_b)
@@ -717,7 +746,7 @@ av_all_b.append(av_tot_b)
 gft_all_old.append(gft_tot_old)
 gft_all_new.append(gft_tot_new)
 
-my_dict={'Percentage_of_Sellers':perc_sellers,'Percentage_Value_Increased':pvi,'Percentage_of_Agents_Trading':trade_percent,'Consumptive_Use_Sellers':water_held_tot_s,'Consumptive_Use_Buyers':water_held_tot_b,'Volume_Quantity_Filled_Sellers':water_allow_tot_s,'Volume_Quantity_Filled_Buyers':water_allow_tot_b,'Initial_AV_Sellers':av_tot_s,'Initial_AV_Buyers':av_tot_b}
+my_dict={'Percentage_of_Sellers':perc_sellers,'Percentage_of_Agents_Trading':trade_percent,'Consumptive_Use_Sellers':water_held_tot_s,'Consumptive_Use_Buyers':water_held_tot_b,'Volume_Quantity_Filled_Sellers':water_allow_tot_s,'Volume_Quantity_Filled_Buyers':water_allow_tot_b,'Initial_AV_Sellers':av_tot_s,'Initial_AV_Buyers':av_tot_b}
 df=pd.DataFrame(my_dict)
 df.to_csv('results_data_simulation1.csv',index=False)
 
@@ -726,4 +755,5 @@ print('###############################')
 print('Done with simulation number 1: ')
 print('###############################')
 print('###############################')
+
 
