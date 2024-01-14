@@ -57,7 +57,7 @@ for ppp in range(10): # model will run through the simulation 10 times
 
 	for jj in range(len(dr_num)): # runs through each drought number (each scenario)
 		a_once=500
-		for ii in range(500):
+		for ii in range(500): #why 500 tries? every trial that I did, showed trade after 1. 
 			##main simulation portion
 			print('Try number: ',ii+1)
 			class MyAgent(Agent): #Agent Class, this is an additional class from the mesa packaqge that is being called from within this class. This is called inheritence. The MyAgent class inherits all of the methods and attributes from the mesa.Agent class
