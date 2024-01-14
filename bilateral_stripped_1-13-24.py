@@ -602,31 +602,27 @@ if sum(qq_gft) != 0: #else, repeat loop
 if sum(qq_gft) != 0:  # else, repeat loop
     my_dict = {'Step': x}
     df = pd.DataFrame(my_dict)
+
+    data = {
+        'Buying_Price': all_agent_price1,
+        'Selling_Price': all_agent_price2,
+        'Consumptive_Use': all_agent_endow,
+        'Slope': all_agent_slope,
+        'Intercept': all_agent_intercept,
+        'AV': all_agent_AV,
+        'Gain': all_agent_gain,
+        'Crop_based_Consumptive_Use': all_agent_conu,
+        'c_bar': all_agent_c_bar,
+        'Allowable_Water': all_agent_allow_water,
+        'Seniority': all_agent_seniority
+    }
+
     for j in range(num_of_agents):
-        qq = all_agent_price1[j]
-        rr = all_agent_endow[j]
-        ss = all_agent_price2[j]
-        tt = all_agent_slope[j]
-        uu = all_agent_intercept[j]
-        vv = all_agent_AV[j]
-        ww = all_agent_gain[j]
-        xx = all_agent_conu[j]
-        eee = all_agent_c_bar[j]
-        ggg = all_agent_allow_water[j]
-        kkk = all_agent_seniority[j]
-        df['Agent' + str(j + 1) + '_Buying_Price'] = qq
-        df['Agent' + str(j + 1) + '_Selling_Price'] = ss
-        df['Agent' + str(j + 1) + '_Consumptive_Use'] = rr
-        df['Agent' + str(j + 1) + '_Slope'] = tt
-        df['Agent' + str(j + 1) + '_Intercept'] = uu
-        df['Agent' + str(j + 1) + '_AV'] = vv
-        df['Agent' + str(j + 1) + '_Gain'] = ww
-        df['Agent' + str(j + 1) + '_Crop_based_Consumptive_Use'] = xx
-        df['Agent' + str(j + 1) + '_c_bar'] = eee
-        df['Agent' + str(j + 1) + '_Allowable_Water'] = ggg
-        df['Agent' + str(j + 1) + '_Seniority'] = kkk
+        agent_data = {f'Agent{j+1}_{key}': data[key][j] for key in data}
+        df = pd.concat([df, pd.DataFrame(agent_data)], axis=1)
 
     df.to_csv('all_agents_data_pos_try23_dr_no.csv', index=False)
+
 ### TEst End
     gft_tot_new.append(sum(qq_gft))
     count_s=0
