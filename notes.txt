@@ -1,0 +1,16 @@
+01/10/2024 Notes:
+- maybe we want to eliminate the interation through drought profiles for the final package, obiviously we need to keep it for the paper
+- We may 
+https://hpc.wsu.edu/programmers-guide/python/
+- are we keeping track of who is trading with who?
+- we need to go over potential adaptations for the code. Reetwika said she had a list.
+- welfare costs of climate shocks.
+- run each drough number over one thread, then combine at end. Make it more efficient.
+- how do we compare welfare of no drought at all, if GFT is our only metric?
+
+
+10/13/2024 Notes:
+time under pd concat: Time taken for simulation 1:  30.93202233314514
+time under original: Time taken for simulation 1:  48.66238355636597
+started pep-8 spacing rule
+- run each drought number over a different parallel task. 

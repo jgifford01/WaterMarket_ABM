@@ -17,6 +17,12 @@ started pep-8 spacing rule
 
 
 """
+########################################################################
+#local modules
+from one_iter_core import Config
+
+
+
 
 #########################################################################
 # Preamble
@@ -41,7 +47,7 @@ print('##############################################################')
 #########################################################################
 random.seed(4) #random seed
 
-
+"""
 trade_percent_all=[] #percent of agents who trade
 water_held_all_s=[] # qty of water held by sellers	
 water_held_all_b=[] # qty of water held by buyers
@@ -66,10 +72,18 @@ water_held_tot_s=[] # same as water_held_all_s
 water_allow_tot_s=[] # same as water_allow_all_s
 av_tot_s=[] # same as av_all_s
 av_tot_b=[] # same as av_all_b
+"""
+#test
+from one_iter_core import Config
+sim_instance_1 = Config(num_agents=100, dr_num=60)
+sim_instance_1.trade_percent_all
 
 
 
-iterations = int(1000) #input("How many steps? : ") #initial iteration number
+#end test
+
+
+
 
 #for ii in range(2): #what does this iteration tick do? # why 500?//got rid of it
 ##main simulation portion
@@ -433,6 +447,7 @@ gainft=[] #GFT
 stop=[] #stopping criterion
 
 #interactions go on for 'iterations' number of times
+iterations = int(1000) #input("How many steps? : ") #initial iteration number
 for i in range(iterations):
 	ww=model.schedule.get_agent_count() #how many agents are there at that particular iteration
 	#setting price (for both B and S) after every iteration to 0
