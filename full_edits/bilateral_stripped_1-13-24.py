@@ -15,14 +15,24 @@ time under original: Time taken for simulation 1:  48.66238355636597
 started pep-8 spacing rule
 - run each drought number over a different parallel task. 
 
+- are we keeping track of who is trading with who?
+- we need to go over potential adaptations for the code. Reetwika said she had a list.
+- welfare costs of climate shocks.
+- run each drough number over one thread, then combine at end. Make it more efficient.
+- how do we compare welfare of no drought at all, if GFT is our only metric?
+in
+
+time under pd concat: Time taken for simulation 1:  30.93202233314514
+time under original: Time taken for simulation 1:  48.66238355636597
+started pep-8 spacing rule
+- run each drought number over a different parallel task. 
+
+
+- why does averqge value decrease for sellerss?
+-include coordinates, and calculate euclidian distance between interactions,  and weight likelihood of trade by this inverse ditance weighting
+
 
 """
-########################################################################
-#local modules
-from one_iter_core import Config
-
-
-
 
 #########################################################################
 # Preamble
@@ -47,7 +57,7 @@ print('##############################################################')
 #########################################################################
 random.seed(4) #random seed
 
-"""
+
 trade_percent_all=[] #percent of agents who trade
 water_held_all_s=[] # qty of water held by sellers	
 water_held_all_b=[] # qty of water held by buyers
@@ -72,25 +82,17 @@ water_held_tot_s=[] # same as water_held_all_s
 water_allow_tot_s=[] # same as water_allow_all_s
 av_tot_s=[] # same as av_all_s
 av_tot_b=[] # same as av_all_b
-"""
-#test
-from one_iter_core import Config
-sim_instance_1 = Config(num_agents=100, dr_num=60)
-sim_instance_1.trade_percent_all
 
 
 
-#end test
-
-
-
+iterations = int(1000) #input("How many steps? : ") #initial iteration number
 
 #for ii in range(2): #what does this iteration tick do? # why 500?//got rid of it
 ##main simulation portion
 
 class MyAgent(Agent): #Agent Class, this is an additional class from the mesa packaqge that is being called from within this class. This is called inheritence. The MyAgent class inherits all of the methods and attributes from the mesa.Agent class
 	def __init__(self, unique_id, model,AV,endow,slope,intercept,c_b,w_b,allow_h2o,conu,exo_price,conur,h2o,ret,distrib_comb,techno,senior,field,tot_h2o,river_m,yield_agents,revenue,pr_wtp,pr_wta,pr_bid,pr_ask):
-		super().__init__(unique_id, model) # This line is typically used when you're inheriting from a parent class, and you want to initialize the attributes of the parent class before adding or modifying attributes specific to the child class. In this case, the parent class is mesa.Agent
+		super().__init__(unique_id, model) # Passes unique ID and model to the parent class. This line is typically used when you're inheriting from a parent class, and you want to initialize the attributes of the parent class before adding or modifying attributes specific to the child class. In this case, the parent class is mesa.Agent
 		"""
 		Unique id is assigned to each agent, AV stands for average value, endow = c, slope and intercept stands for the same from the yield equation in the
 		ABM, c_b = cbar, w_b = ̅wbar$, allow_h2o = allowable water to divert for each water right, exo_price = exogenous price, conur = consumptive use rate,
@@ -123,11 +125,11 @@ class MyAgent(Agent): #Agent Class, this is an additional class from the mesa pa
 		self.pr_wta=pr_wta
 		self.pr_bid=pr_bid
 		self.pr_ask=pr_ask
-		self.price1=0.0 #(Buying Price)
+		self.price1=0.0 #(Buying Price) # is this a default value assigned? If so, whi not in the parameter list? // Assigning it here makes it harder to redefine, if in parameter set as default, could easily assign a different value, but keeping it here could be more immutable
 		self.price2=0.0 #(Selling Price)
 		self.gain=0.0
-	
-	def trade(self):  # Trading Method, # Self defines instance of a class. We check for if trade can happen:
+
+	def trade(self):  # Trading Method, # Self defines generic instance of the class. We check for if trade can happen:
 		if self.senior<=dr_no-1: 
 			arr=[]
 			ww=self.model.schedule.get_agent_count()
@@ -347,7 +349,7 @@ class Trade_Model(Model): # Trading Class
 		self.schedule.step() #randomly starts trading
 
 
-
+#GPT Split
 
 
 num_of_agents=num_agents #int(no_sen+yes_sen) #total agents
@@ -447,7 +449,6 @@ gainft=[] #GFT
 stop=[] #stopping criterion
 
 #interactions go on for 'iterations' number of times
-iterations = int(1000) #input("How many steps? : ") #initial iteration number
 for i in range(iterations):
 	ww=model.schedule.get_agent_count() #how many agents are there at that particular iteration
 	#setting price (for both B and S) after every iteration to 0
