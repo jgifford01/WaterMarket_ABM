@@ -42,6 +42,7 @@ class MyAgent(Agent):
         self.sen = sen
         self.land = land
         self.tot_water = tot_water
+    #More stuff to add here
 
     def step(self):
         # Agent step logic goes here

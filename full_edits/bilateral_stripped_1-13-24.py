@@ -8,7 +8,7 @@ https://hpc.wsu.edu/programmers-guide/python/
 - welfare costs of climate shocks.
 - run each drough number over one thread, then combine at end. Make it more efficient.
 - how do we compare welfare of no drought at all, if GFT is our only metric?
-in
+///!!!!!!check if it is decreasing in the original code
 
 time under pd concat: Time taken for simulation 1:  30.93202233314514
 time under original: Time taken for simulation 1:  48.66238355636597
@@ -19,13 +19,8 @@ started pep-8 spacing rule
 - we need to go over potential adaptations for the code. Reetwika said she had a list.
 - welfare costs of climate shocks.
 - run each drough number over one thread, then combine at end. Make it more efficient.
-- how do we compare welfare of no drought at all, if GFT is our only metric?
+- how do we compare welfare of no drought at all, if GFT is our only metric? no value to water market if no drought, we are measuring the value of the market
 in
-
-time under pd concat: Time taken for simulation 1:  30.93202233314514
-time under original: Time taken for simulation 1:  48.66238355636597
-started pep-8 spacing rule
-- run each drought number over a different parallel task. 
 
 
 - why does averqge value decrease for sellerss?
@@ -69,8 +64,8 @@ av_all_b=[] # average value of water held by buyers
 # gains from trade after 10 iterations
 gft_all_old=[] # same as gft_tot_old
 gft_all_new=[] # same as gft_tot_new
-num_agents = int(100) #  determining the number of agents?
-dr_num = int(60) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
+num_agents = int(500) #  determining the number of agents?
+dr_num = int(50) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
 perc_sellers = dr_num/num_agents #Percentage sellers indicate that out of 500 agents 10% or 20% are sellers: 10% sellers = 50 sellers and 450 buyers. These correspond to the dr_num variable -> 10%,20%,...,90% of sellers ==50,100,...,450
 dr_severity = 1-perc_sellers
 gft_tot_old=[] # same as gft_all_old
@@ -349,7 +344,7 @@ class Trade_Model(Model): # Trading Class
 		self.schedule.step() #randomly starts trading
 
 
-#GPT Split
+#GPT Split line, character maxed out
 
 
 num_of_agents=num_agents #int(no_sen+yes_sen) #total agents

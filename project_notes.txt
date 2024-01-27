@@ -1,0 +1,74 @@
+01/10/2024 Notes:
+- maybe we want to eliminate the interation through drought profiles for the final package, obiviously we need to keep it for the paper
+- We may 
+https://hpc.wsu.edu/programmers-guide/python/
+- are we keeping track of who is trading with who?
+- we need to go over potential adaptations for the code. Reetwika said she had a list.
+- welfare costs of climate shocks.
+- run each drough number over one thread, then combine at end. Make it more efficient.
+- how do we compare welfare of no drought at all, if GFT is our only metric?
+
+
+01/13/2024 Notes:
+time under pd concat: Time taken for simulation 1:  30.93202233314514
+time under original: Time taken for simulation 1:  48.66238355636597
+started pep-8 spacing rule
+- run each drought number over a different parallel task. 
+
+
+01/20/2024 Notes:
+
+- Can we implement a reinforcement learning functionality to the model, where if a farmer trades, they are rewarded, but if they don't they are less likely to participate in the future?
+- Monte carlo with random draws from percipitation distribution
+
+################################################
+memo 1 sent 1/19/2024
+################################################
+
+01/26/2024 Notes:
+
+Spent time reading over dissertation paper and Howitt 1995
+
+Video:
+What Does Machine Learning Offer Game Theory (And Vice Versa)?
+https://www.youtube.com/watch?v=GCCkLf42nMQ
+
+Test: Compare results random.seed(4) under original script, and bilateral_stripped_1-13-24
+
+orig:
+Total Initial AV for Sellers:  22474.89560990274
+Total Final AV for Sellers:  17115.14989473611
+Total Initial AV for Buyers:  0.0
+Total Final AV for Buyers:  12081.720168994363
+Total Percentage of Agents Trading:  7.8
+Number of agents that are cut-off:  451
+-------------------
+
+
+
+Stripped:
+
+Random drought number is:  50
+Total Gain from Trade:  248140.34918524325
+-------------------
+The model shows trade
+-------------------
+Total Initial AV for Sellers:  22474.89560990274
+Total Final AV for Sellers:  17115.14989473611  
+Total Initial AV for Buyers:  0.0
+Total Final AV for Buyers:  12081.720168994363
+Total Percentage of Agents Trading:  [7.8]
+drought severity: 0.9
+Number of agents that are cut-off:  451
+##############################################################
+##############################################################
+Done with simulation number 1 in  61.22610306739807 seconds
+
+
+*****We're getting the same results which is a good thing. 
+
+Check out for extension ideas:
+https://en.wikipedia.org/wiki/Multi-agent_reinforcement_learning
+
+
+- Donadelli, Michael, Marcus Jüppner, Max Riedel, and Christian Schlag. "Temperature shocks and welfare costs." Journal of Economic Dynamics and Control 82 (2017): 331-355.

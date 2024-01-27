@@ -22,6 +22,7 @@ from matplotlib.pyplot import *
 import random
 import pandas as pd
 from itertools import product # Itertools helps in creating iterations. Product returns the cartesian product from each iteration
+random.seed(4) #random seed
 
 #########################################################################
 # Global variables
