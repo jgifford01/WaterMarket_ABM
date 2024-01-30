@@ -50,7 +50,7 @@ print('##############################################################')
 #########################################################################
 # Global variables
 #########################################################################
-random.seed(4) #random seed
+#random.seed(4) #random seed
 
 
 trade_percent_all=[] #percent of agents who trade
@@ -64,8 +64,8 @@ av_all_b=[] # average value of water held by buyers
 # gains from trade after 10 iterations
 gft_all_old=[] # same as gft_tot_old
 gft_all_new=[] # same as gft_tot_new
-num_agents = int(500) #  determining the number of agents?
-dr_num = int(50) # if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
+num_agents = int(100) #  determining the number of agents?
+dr_num = int(80) # num_agents-dr_num is num of buyers. if 50, agents 1-50 are sellers, and 51-500 are buyers #we could instead create a distribution that follows a series of climatic shocks, calibrated from real data.
 perc_sellers = dr_num/num_agents #Percentage sellers indicate that out of 500 agents 10% or 20% are sellers: 10% sellers = 50 sellers and 450 buyers. These correspond to the dr_num variable -> 10%,20%,...,90% of sellers ==50,100,...,450
 dr_severity = 1-perc_sellers
 gft_tot_old=[] # same as gft_all_old

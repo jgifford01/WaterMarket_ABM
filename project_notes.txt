@@ -72,3 +72,56 @@ https://en.wikipedia.org/wiki/Multi-agent_reinforcement_learning
 
 
 - Donadelli, Michael, Marcus Jüppner, Max Riedel, and Christian Schlag. "Temperature shocks and welfare costs." Journal of Economic Dynamics and Control 82 (2017): 331-355.
+
+-performing some sort of sensitivity analysis to see how the model changes under parameter selection. Ideally, the model would be stable. 
+
+- ran simulation 100 times for the same drought profiles for each of the following parameters:
+    dr_num = 75
+    agents = 100
+    results -> trade_percent ~N(22.8, sd = 6.6)
+
+    dr_num = 150
+    agents = 200
+    results -> trade_percent ~N(28.0, sd = 4.7)
+    
+    dr_num = 225
+    agents = 300
+    results -> trade_percent ~N(32.2, sd = 4.6)
+    
+    dr_num = 750
+    agents = 1000
+    results -> trade_percent ~N(44.05, sd = 1.9)
+    
+    see data at:
+    https://www.desmos.com/calculator/ijsaeq9b3y
+
+    A two sample t-test confirmed that these means are significantly different, similarly an F-test confirmed significantly different variances
+
+see relationship between number agents and market participation
+https://www.desmos.com/calculator/rm9vyyypg9
+
+=> f(x)=9.08101*ln(x)-19.4416
+One percent increase in x is associated with a (9.08101 / 100) = 0.091 unit increase in DV. For every one percent increase in market size, participation increases 9 percentage points. 
+
+tomorrow: benchmark time complexity of algorithm
+
+Time-compexity for 200 agents under dr_no 50-150: DR_NO doesn't increase complexity in an interesting way
+
+let's try increasing agent count and see how time responds, from n=100 to n=300 by increrasing 1 integer. dr_no is agent_count/2. So 50% cutoff
+
+!! Whow is n iterations during one season realistic for farmers trading? can we make it so a previouis attempt at trading with failure disincentivizes future atttemps?
+
+- Time complexity describes how runtime relates to input size
+
+
+- data structures and algorithms tutorial Video
+https://www.youtube.com/watch?v=D6xkbGLQesk
+
+-Faster ABMs in python
+https://lrdegeest.github.io/blog/faster-abms-python
+ -integrating numba package
+
+
+next time:
+test for how random seed affects results
+
