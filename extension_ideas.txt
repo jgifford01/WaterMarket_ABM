@@ -1,0 +1,9 @@
+Below is the list of questions that can potentially be addressed using the same ABM model:
+- Gains from trade and social welfare comparison using some other trade structure apart from Bilateral and Smart Market Trade.
+    https://en.wikipedia.org/wiki/Welfare_cost_of_business_cycles
+- Spatial preferences, transaction costs for water transfers and technologies available for crop production are essential in determining if a water-right holder may want to lease their rights or use them for other purposes. The ABM can be modified to include the above conditions and simulate Gains.
+- The ABM can be used to study the economic consequences of relinquishing water rights in a basin.
+- Currently the model assumes that agents/farms either lease their rights or irrigate. The farms left with some amount of the water that they could not trade are not using that amount for irrigation.  The model can be modified to accommodate partial leasing and partial irrigation. We can also bring in impact of over-irrigation on gains in this context.
+- Incorporate into the model emergent phenomena and time variant. E.g: The decision of an agent on the type of crops to grow this season is dependent upon the production from last season. Also If an agent wants to participate in water market or not may be dependent on water market performance from last season.
+- Simulate application of adjudication to water rights and observe the costs and benefits associated with it.
+I recall Prof. Yoder and I had some discussion on Application of Machine learning into the model but I am blanking on the exact question.
