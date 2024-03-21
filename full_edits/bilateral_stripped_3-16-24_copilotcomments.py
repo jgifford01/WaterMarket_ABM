@@ -8,7 +8,12 @@
 
 
 02-11-2024 Notes:
-- In output, Agenti_Intercept/(2*Agenti_Slope) is the argmax (c_bar) of the revenue function. Not worrying about water delivery costs, and other inputs ceterus paribus.
+- In output, Agenti_Intercept/(2*Agenti_Slope) is the argmax (c_bar) of the revenue function. 
+Not worrying about water delivery costs, and other inputs ceterus paribus.
+- Why does buyer average value initialize at values > 0? Shouldn't they start at 0?
+- Agenti_Consumptive_Use*Agenti_AV 
+-Sellers decrease in total revenue/value over all, but gains from trade should be what we are really looking at. The sellers who do sell go to zero
+-can we somehow separate out seller gains from buyer gains?
 """
 
 
@@ -101,10 +106,7 @@ pr_wtp = Willingness to Pay.
 pr_wta = Willingness to accept. 
 pr_bid = Bid Price. 
 pr_ask = Ask Price.
-"""
 
-
-"""
 MyAgent class inherits the Agent class from the mesa package. 
 The MyAgent class inherits all of the methods and attributes from the mesa.Agent class. 
 Unique id is assigned to each agent.
@@ -115,9 +117,9 @@ Unique id is assigned to each agent.
 """
 
 class MyAgent(Agent): 
-	def __init__(self, unique_id, model,AV,endow,slope,intercept,c_b,w_b,allow_h2o,
-	             conu,exo_price,conur,h2o,ret,distrib_comb,techno,senior,field,
-				 tot_h2o,river_m,yield_agents,revenue,pr_wtp,pr_wta,pr_bid,pr_ask):
+	def __init__(self, unique_id, model,AV,endow,slope,intercept,c_b,w_b,allow_h2o, conu,exo_price, conur,h2o,
+			     ret,distrib_comb,techno,senior,field, tot_h2o,river_m,yield_agents,revenue,pr_wtp,pr_wta,
+				 pr_bid,pr_ask):
 		super().__init__(unique_id, model) 
 		self.AV = AV
 		self.endow = endow                # endowment = c
@@ -147,7 +149,7 @@ class MyAgent(Agent):
 		self.price2 = 0.0  # (Selling Price)
 		self.gain = 0.0
 
-	def trade(self):  # Trading Method, # Self defines generic instance of the class. We check for if trade can happen:
+	def trade(self):  # Trading Method, We check for if trade can happen:
 		if self.senior<=dr_no-1: 
 			arr=[]
 			ww=self.model.schedule.get_agent_count()
@@ -506,7 +508,6 @@ for i in range(num_of_agents):
 	for j in range(iterations):
 		aa.append(sell[j][i])
 	all_agent_price2.append(aa)
-
 all_agent_gain=[]
 for i in range(num_of_agents):
 	aa=[]
@@ -634,7 +635,7 @@ if sum(qq_gft) != 0:  # else, repeat loop
         agent_data = {f'Agent{j+1}_{key}': data[key][j] for key in data}
         df = pd.concat([df, pd.DataFrame(agent_data)], axis=1)
 
-    df.to_csv('all_agents_data_pos_try23_dr_no.csv', index=False)
+    df.to_csv('sim_results_output/all_agents_data_pos_try23_dr_no.csv', index=False)
 
 
     gft_tot_new.append(sum(qq_gft))
@@ -689,7 +690,6 @@ if sum(qq_gft) != 0:  # else, repeat loop
         if sen_list[i]>dr_no-1:
             int_AV_b.append(all_agent_AV[i][0]*all_agent_endow[i][0])
             fin_AV_b.append(all_agent_AV[i][-1]*all_agent_endow[i][-1])
-			
     av_cu_i=[]
     av_cu_f=[]
     for i in range(num_of_agents):
@@ -730,12 +730,11 @@ if sum(qq_gft) != 0:  # else, repeat loop
     print('-------------------')
     print('The model shows trade')
     print('-------------------')
-
-    print('Total Initial AV for Sellers: ',sum(int_AV_s))
-    print('Total Final AV for Sellers: ',sum(fin_AV_s))
-    print('Total Initial AV for Buyers: ',sum(int_AV_b))
-    print('Total Final AV for Buyers: ',sum(fin_AV_b))
-    print('Total Percentage of Agents Trading: ',trade_percent)
+    print('Total Initial Value (revenue) for Sellers: ',sum(int_AV_s))  # Consumptive use(c_bar*I{0,1}) * AV
+    print('Total Final Value (revenue) for Sellers: ',sum(fin_AV_s))  # Consumptive use(c_bar*I{0,1}) * AV
+    print('Total Initial Value (revenue) for Buyers: ',sum(int_AV_b))  # Consumptive use(c_bar*I{0,1}) * AV
+    print('Total Final Value (revenue) for Buyers: ',sum(fin_AV_b))  # Consumptive use(c_bar*I{0,1}) * AV
+    print('Total Percentage of Agents Trading: ',trade_percent)  # Consumptive use(c_bar*I{0,1}) * AV
     print('drought severity:', dr_severity)
 
 	##this prints number of agents that are cut-off
@@ -760,8 +759,27 @@ gft_all_new.append(gft_tot_new)
 
 my_dict={'Percentage_of_Sellers':perc_sellers,'Percentage_of_Agents_Trading':trade_percent,'Consumptive_Use_Sellers':water_held_tot_s,'Consumptive_Use_Buyers':water_held_tot_b,'Volume_Quantity_Filled_Sellers':water_allow_tot_s,'Volume_Quantity_Filled_Buyers':water_allow_tot_b,'Initial_AV_Sellers':av_tot_s,'Initial_AV_Buyers':av_tot_b}
 df=pd.DataFrame(my_dict)
-df.to_csv('results_data_simulation1.csv',index=False)
+df.to_csv('sim_results_output/results_data_simulation1.csv',index=False)
 end_time = time.time()-start_time
+
+
+
+"""
+################# Testing with AV
+
+data_AV = {
+    "Metric": ["Average Initial Value Sellers", "Average Initial Value Buyers", "Average Final Value Sellers", "Average Final Value Buyers"],
+    "Value": [int_AV_s, int_AV_b, fin_AV_s, fin_AV_b]
+}
+
+# Create a DataFrame
+df_average_values = pd.DataFrame(data_AV)
+df_average_values.to_csv('df_average_values.csv',index=False)
+
+#####################
+"""
+
+
 print('##############################################################')
 print('##############################################################')
 print('Done with simulation number 1 in ',end_time, 'seconds ')

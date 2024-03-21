@@ -26,7 +26,7 @@ gft_all_old=[]
 gft_all_new=[]
 
 for ppp in range(10):
-	dr_num=[50,100,150,200,250,300,350,400,450] #,510,560,610,660,710,760]
+	dr_num=[50]#,100,150,200,250,300,350,400,450] #,510,560,610,660,710,760]
 	rand_seed=[11,13,15,17,19,21,23,25,27] #,25,27,29,31,33,35,37]
 	rand_seed3=[10,12,14,16,18,20,22,24,26] #,22,24,26,28,30,32,34]
 	rand_seed2=[1,2,3,4,5,6,7,8,9]
@@ -675,7 +675,7 @@ for ppp in range(10):
 					#df['Agent'+str(j+1)+'_Ask_Price']=ttt
 					#df['Agent'+str(j+1)+'_AV_Index_Seller']=uuu
 					#df['Agent'+str(j+1)+'_AV_Index_Buyer']=vvv
-				df.to_csv('bilateral_baseline_datafile/all_agents_data_pos_try23_dr_no.csv',index=False)
+				df.to_csv('full_edits/output/all_agents_data_pos_try23_dr_no.csv',index=False)
 				
 				gft_tot_new.append(sum(qq_gft))
 		
@@ -813,7 +813,7 @@ for ppp in range(10):
 
 	my_dict={'Percentage_of_Sellers':perc_sellers,'Percentage_Value_Increased':pvi,'Percentage_of_Agents_Trading':trade_percent,'Consumptive_Use_Sellers':water_held_tot_s,'Consumptive_Use_Buyers':water_held_tot_b,'Volume_Quantity_Filled_Sellers':water_allow_tot_s,'Volume_Quantity_Filled_Buyers':water_allow_tot_b,'Initial_AV_Sellers':av_tot_s,'Initial_AV_Buyers':av_tot_b}
 	df=pd.DataFrame(my_dict)
-	df.to_csv('bilateral_baseline_datafile/results_data_simulation_'+str(ppp+1)+'.csv',index=False)
+	df.to_csv('full_edits/output/results_data_simulation_'+str(ppp+1)+'.csv',index=False)
 	
 	print('###############################')
 	print('###############################')
@@ -869,5 +869,5 @@ for i in range(len(perc_sellers)):
 
 my_dict={'Percentage_of_Sellers':perc_sellers,'Percentage_Value_Increased':pvi_avg,'GFT_old':gft_old_avg,'GFT_new':gft_new_avg,'Percentage_of_Agents_Trading':trade_percent_avg,'Consumptive_Use_Sellers':water_held_avg_s,'Consumptive_Use_Buyers':water_held_avg_b,'Volume_Quantity_Filled_Sellers':water_allow_avg_s,'Volume_Quantity_Filled_Buyers':water_allow_avg_b,'Initial_AV_Sellers':av_avg_s,'Initial_AV_Buyers':av_avg_b}
 df=pd.DataFrame(my_dict)
-df.to_csv('bilateral_baseline_datafile/try_23_bilateral_baseline_avg_data.csv',index=False) #,columns=['Percentage_of_Sellers','Percentage_Value_Increased','Percentage_of_Agents_Trading','Water_held_in_Water_Rights'])
+df.to_csv('full_edits/output/try_23_bilateral_baseline_avg_data.csv',index=False) #,columns=['Percentage_of_Sellers','Percentage_Value_Increased','Percentage_of_Agents_Trading','Water_held_in_Water_Rights'])
 
