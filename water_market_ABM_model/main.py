@@ -2,8 +2,8 @@ from model import TradingModel
 import numpy as np
 import matplotlib.pyplot as plt
 
-K = 20
-N= 20
+K = 1
+N= 10
 stream_complexity = 2
 
 GFT_final_array = np.zeros((4,101,K))

@@ -1,3 +1,9 @@
+Need to work on requirements.txt file
+
+Learn how to organize for public viewing
+
+We can also have 2 versions, one for HPC, and one without multithreading
+
 Sources for creating readme:
 https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
 https://docs.github.com/en/contributing/style-guide-and-content-model/style-guide
