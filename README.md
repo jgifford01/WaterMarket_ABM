@@ -9,7 +9,7 @@ https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
 https://docs.github.com/en/contributing/style-guide-and-content-model/style-guide
 https://github.com/projectmesa/mesa-examples/tree/main/examples/schelling
 
-# Agent-Based Baseline Water Trading Model
+# Agent-Based Water Trading Model
 An agent-based model of agricultural water markets under appropriative rights and droughts. Includes bilateral and multilateral trading structures. 
 
 ## Description

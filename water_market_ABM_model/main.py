@@ -1,11 +1,16 @@
+# Libraries
 from model import TradingModel
 import numpy as np
 import matplotlib.pyplot as plt
 
-K = 1
-N= 10
+# The K parameter is used to run the simulation multiple times (New agents each round currently) 
+K = 10
+# Number of agents
+N= 100
+# Stream complexity determines the number of potential confluences the watershed can have
 stream_complexity = 2
 
+# array for storing the gains from trade results
 GFT_final_array = np.zeros((4,101,K))
 for k in range(K):
     random_seed = np.random.randint(0,1000)
@@ -19,11 +24,6 @@ for k in range(K):
 
         model1 = TradingModel(N=N, aw=2, alphaw=10, betaw=2, cbar0=1, gamma= 0,
                             P=P, stream_complexity=stream_complexity, upstream_selling=False,
-                            smart_market_ind=False, bilateral_market_ind=False, 
-                            CPP_ind=True, random_seed=random_seed)
-        # CPP without streamflow restrictions
-        model4 = TradingModel(N=N, aw=2, alphaw=10, betaw=2, cbar0=1, gamma= 0,
-                            P=P, stream_complexity=stream_complexity, upstream_selling=True,
                             smart_market_ind=False, bilateral_market_ind=False, 
                             CPP_ind=True, random_seed=random_seed)
         
@@ -40,12 +40,23 @@ for k in range(K):
                             smart_market_ind=False, bilateral_market_ind=True, 
                             CPP_ind=False, random_seed=random_seed)
         
+        """# CPP without trading restriction
+        model4 = TradingModel(N=N, aw=2, alphaw=10, betaw=2, cbar0=1, gamma= 0,
+                            P=P, stream_complexity=stream_complexity, upstream_selling=True,
+                            smart_market_ind=False, bilateral_market_ind=False, 
+                            CPP_ind=True, random_seed=random_seed)"""
+        
         
 
         # Run central planner problem
         model1.central_planner_problem()
         GFT_final_array[0,i,k] = model1.GFT
         #print("Gains from Trade CPP:", model1.GFT)
+
+        """#CPP without trading restriction
+        model4.central_planner_problem()
+        GFT_final_array[3,i,k] = model4.GFT"""
+
         
         # Run SMART MARKET
         model2.trade_sequence()
@@ -57,9 +68,6 @@ for k in range(K):
         GFT_final_array[2,i,k] = model3.GFT
         #print("Gains from Trade BM:", model3.GFT)
 
-        # Run central planner problem without streamflow restrictions
-        model4.central_planner_problem()
-        GFT_final_array[3,i,k] = model4.GFT
 
 
         
@@ -68,7 +76,9 @@ for k in range(K):
 
 # plotting 
 
+# Take mean across K runs
 GFT_final_mean_array_k = np.mean(GFT_final_array,axis=2)
+# Compute standard error of the mean estimate
 GFT_se_array = np.std(GFT_final_array, axis=2)/np.sqrt(K)
 
 PP_reversed = 1 * np.arange(100, -1, -1).reshape(100+1, 1)
@@ -76,7 +86,7 @@ fig, ax1 = plt.subplots(figsize=(6, 4))  # Adjust figsize as needed
 ax1.plot (PP_reversed, GFT_final_mean_array_k[0,:], label = "Central Planning")
 ax1.plot (PP_reversed, GFT_final_mean_array_k[1,:], label = "Smart Market")
 ax1.plot (PP_reversed, GFT_final_mean_array_k[2,:], label = "Bilateral Market")
-ax1.plot (PP_reversed, GFT_final_mean_array_k[3,:], label = "Central Planning without streamflow restrictions")
+#ax1.plot (PP_reversed, GFT_final_mean_array_k[3,:], label = "CPP without trading restriction")
 
 
 # plot SE
