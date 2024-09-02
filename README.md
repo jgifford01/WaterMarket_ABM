@@ -1,5 +1,7 @@
 Need to work on requirements.txt file
 
+
+with the citation file, will show once release created
 Learn how to organize for public viewing
 
 We can also have 2 versions, one for HPC, and one without multithreading
