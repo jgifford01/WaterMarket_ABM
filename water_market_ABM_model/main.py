@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # The K parameter is used to run the simulation multiple times (New agents each round currently) 
 K = 10
 # Number of agents
-N= 100
+N= 10
 # Stream complexity determines the number of potential confluences the watershed can have
 stream_complexity = 2
 
@@ -51,22 +51,19 @@ for k in range(K):
         # Run central planner problem
         model1.central_planner_problem()
         GFT_final_array[0,i,k] = model1.GFT
-        #print("Gains from Trade CPP:", model1.GFT)
 
         """#CPP without trading restriction
         model4.central_planner_problem()
         GFT_final_array[3,i,k] = model4.GFT"""
-
         
         # Run SMART MARKET
         model2.trade_sequence()
         GFT_final_array[1,i,k] = model2.GFT
-        #print("Gains from Trade SM:", model2.GFT)
-        
+
         # Run Bilateral Market 
         model3.trade_sequence()
         GFT_final_array[2,i,k] = model3.GFT
-        #print("Gains from Trade BM:", model3.GFT)
+
 
 
 
