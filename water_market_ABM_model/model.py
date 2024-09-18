@@ -4,7 +4,6 @@ from mesa.datacollection import DataCollector
 import numpy as np
 import cvxpy as cp
 from agent import WaterAgent
-from scipy.optimize import minimize
 
 class TradingModel(Model):
     def __init__(self, N, aw, alphaw, betaw, cbar0, gamma, P, stream_complexity,
@@ -64,15 +63,15 @@ class TradingModel(Model):
             np.random.shuffle(self.catalog_of_sellers)
                                                      
 
-    def reg_enviro(self, buyer, seller):
+    def reg_enviro(self, seller, buyer):
         # If buyer is upstream of seller, then trade is not restricted
         if len(buyer) > len(seller):
             #print("Trade is restricted: Buyer is upstream of seller")
             return False
         
         if len(buyer) <= len(seller):
-            buyer_subvector = buyer[:len(seller)-1]  # Adjusted to match seller's length minus 1
-            seller_subvector = seller[:-1]
+            buyer_subvector = buyer[:-1]  # Adjusted to match seller's length minus 1
+            seller_subvector = seller[:len(buyer)-1]
 
             if np.array_equal(buyer_subvector, seller_subvector):
                 if buyer[-1] > seller[-1]:
@@ -86,21 +85,11 @@ class TradingModel(Model):
                 return False
 
     def trade_sequence(self):
-                #print out avbars of buyers and sellers
-        #print("Buyers avbar")
-        #print([agent.avbar for agent in self.catalog_of_buyers])
-        #print("Sellers avbar")
-        #print([agent.avbar for agent in self.catalog_of_sellers])
-
-   
         # End trading if buyer or seller list is empty
         if not self.catalog_of_buyers or not self.catalog_of_sellers:
             self.GFT = 0
             return
-        #print(f"Number of buyers: {len(self.catalog_of_buyers)}")
-        #print(f"Number of sellers: {len(self.catalog_of_sellers)}")
-        
-       
+
         # Total value before trading
         TV0 = np.sum([agent.c * (agent.alpha - agent.beta * agent.c) for agent in self.schedule.agents])
 
@@ -110,12 +99,12 @@ class TradingModel(Model):
             for s in range(len(self.catalog_of_sellers)):
                 seller = self.catalog_of_sellers[s]
 
-                if seller.c == 0: # early exit if seller has no water for speed
+                if seller.c == 0: # early exit if seller has no water for code efficiency
                     continue
 
                 # check reg enviro conditions
                 if self.upstream_selling == False:
-                    if self.reg_enviro(buyer.trib_vector, seller.trib_vector) == False:
+                    if self.reg_enviro(seller.trib_vector, buyer.trib_vector) == False:
                         continue
                     
                     
@@ -132,18 +121,7 @@ class TradingModel(Model):
                 avSr = seller.alpha - seller.beta * (seller.c - x)
                 wta = avSr_1 + avSr - seller.alpha # per unit wta
                 ask = wta * (1 + self.gamma*seller.sigma)
-                """
-                # print statements to check values
-                print("##########################################################")
-                print(f"Buyer ID: {buyer.unique_id}, Seller ID: {seller.unique_id}")
-                print(f"buyer cbar: {buyer.cbar}, seller cbar: {seller.cbar}")
-                print(f"Buyer initial c: {buyer.c}, Seller initial c: {seller.c}")
-                print(f"buyer avbar {buyer.avbar}, seller avbar: {seller.avbar}")
-                print(f"buyer pro: {buyer.pro}, seller pro: {seller.pro}")
-                print(f"buyer sigma: {buyer.sigma}, seller sigma: {seller.sigma}")
-                print(f"x: {x}")
-                print(f"Bid: {bid}, Ask: {ask}")
-                """
+
                 if bid > ask:
                     buyer.c += x
                     seller.c -= x
@@ -152,24 +130,6 @@ class TradingModel(Model):
                 else:
                     continue
 
-                #print(f"Buyer final c: {buyer.c}, Seller final c: {seller.c}")
-                #print(f"Price: {price}" if bid > ask else "No trade executed")
-
-                
-                
-                
-                
-                #print(f"buyer gains")
-                #print(f"TV0: {TV0}, TV1: {TV1}")
-                #print(f"GFT: {self.GFT}")
-        """
-        # Farmer's below cbar c=0
-        for agent in self.schedule.agents:
-            #print("c",agent.unique_id,agent.c)
-            #print("cbar",agent.cbar)
-            if agent.c < agent.cbar:
-                agent.c = 0
-        """
         # Total value after trading
         TV1 = np.sum([agent.c * (agent.alpha - agent.beta * agent.c) for agent in self.schedule.agents])
         # compute GFT
@@ -181,38 +141,41 @@ class TradingModel(Model):
         agent_array = np.array([[agent.alpha , agent.c, agent.beta, agent.acreage, agent.cbar] 
                                 for agent in self.schedule.agents])
         c_init = agent_array[:,1]
+        # print c init
+        print(f"Initial c: {c_init}")
         beta_array = agent_array[:,2]
         alpha_array = agent_array[:,0]
         initial_value = (alpha_array * (c_init) - beta_array * (c_init**2))
         # create list of trib vectors
         trib_vector_list = [agent.trib_vector for agent in self.schedule.agents]
-        # create adjacency matrix based on reg environment
-        adj_matrix = np.zeros((self.N, self.N))
+        # create elig matrix based on reg environment
+        # from agent i (seller) to agent j (buyer) make sure the elig matrix is correct corresponding to the reg enviro
+        elig_matrix = np.zeros((self.N, self.N))
         for i in range(self.N):
             for j in range(self.N):
-                adj_matrix[i,j] = self.reg_enviro(trib_vector_list[i], trib_vector_list[j])
-        # ajd matrix is all ones if no restrictions
+                elig_matrix[i,j] = self.reg_enviro(trib_vector_list[i], trib_vector_list[j])
+        # eligibility matrix is all ones if no restrictions
         if self.upstream_selling == True:
-            adj_matrix = np.ones((self.N, self.N))
+            elig_matrix = np.ones((self.N, self.N))
         c_opt = cp.Variable(self.N)
-        x = cp.Variable((self.N, self.N), nonneg=False)  # Transfer matrix
+        x = cp.Variable((self.N, self.N), nonneg=True)  # Transfer matrix
         Cs = np.sum(c_init) # Total resource constraint
         # Define the objective function
         objective = cp.Maximize(alpha_array.T @ c_opt -  beta_array.T @ cp.square(c_opt))
         # Constraints
-        constraints = [cp.sum(c_opt) == Cs]  
+        constraints = [cp.sum(c_opt) == Cs] 
+
         if self.upstream_selling == False:
-            for i in range(self.N):
-                for j in range(self.N):
-                    if adj_matrix[i, j] == 1:
-                        constraints.append(c_opt[i] - cp.sum(x[i, :]) + cp.sum(x[:, i]) == c_init[i])
-                    else:
-                        constraints.append(x[i, j] == 0)  # No transfers allowed
+            constraints.append(c_opt == cp.sum(cp.multiply(x,elig_matrix), axis = 0) - 
+                               cp.sum(cp.multiply(x,elig_matrix), axis = 1) + c_init)
+        
         constraints.append(c_opt >= 0)
         # Define and solve the problem
         prob = cp.Problem(objective, constraints)
         prob.solve(solver=cp.SCS, verbose= False)
         c_opt_value = c_opt.value  # numpy array of optimal values
+        # print c opt
+        print(f"Optimal c: {c_opt_value}")
         # compute GFT
         value_after_trade = (alpha_array * c_opt_value - beta_array * (c_opt_value**2))
         gains_from_trade = value_after_trade - initial_value

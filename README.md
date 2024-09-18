@@ -1,9 +1,17 @@
+Need to work on requirements.txt file
+
+
+with the citation file, will show once release created
+Learn how to organize for public viewing
+
+We can also have 2 versions, one for HPC, and one without multithreading
+
 Sources for creating readme:
 https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
 https://docs.github.com/en/contributing/style-guide-and-content-model/style-guide
 https://github.com/projectmesa/mesa-examples/tree/main/examples/schelling
 
-# Agent-Based Baseline Water Trading Model
+# Agent-Based Water Trading Model
 An agent-based model of agricultural water markets under appropriative rights and droughts. Includes bilateral and multilateral trading structures. 
 
 ## Description
