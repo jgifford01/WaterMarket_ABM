@@ -141,6 +141,8 @@ class TradingModel(Model):
         agent_array = np.array([[agent.alpha , agent.c, agent.beta, agent.acreage, agent.cbar] 
                                 for agent in self.schedule.agents])
         c_init = agent_array[:,1]
+        # print c init
+        print(f"Initial c: {c_init}")
         beta_array = agent_array[:,2]
         alpha_array = agent_array[:,0]
         initial_value = (alpha_array * (c_init) - beta_array * (c_init**2))
@@ -172,6 +174,8 @@ class TradingModel(Model):
         prob = cp.Problem(objective, constraints)
         prob.solve(solver=cp.SCS, verbose= False)
         c_opt_value = c_opt.value  # numpy array of optimal values
+        # print c opt
+        print(f"Optimal c: {c_opt_value}")
         # compute GFT
         value_after_trade = (alpha_array * c_opt_value - beta_array * (c_opt_value**2))
         gains_from_trade = value_after_trade - initial_value

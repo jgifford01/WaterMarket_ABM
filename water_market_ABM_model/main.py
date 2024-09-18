@@ -3,10 +3,17 @@ from model import TradingModel
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+import time
+
+# Timing the sequential (non-parallel) version
+start_time = time.time()
+
+
 # The K parameter is used to run the simulation multiple times (New agents each round currently) 
-K = 10
+K = 4
 # Number of agents
-N= 10
+N= 100
 # Stream complexity determines the number of potential confluences the watershed can have
 stream_complexity = 2
 
@@ -71,6 +78,13 @@ for k in range(K):
     print(f"Finished {k+1} iterations")
 
 
+
+end_time = time.time()
+
+# Print the total time taken
+print(f"Sequential version took {end_time - start_time:.2f} seconds.")
+
+
 # plotting 
 
 # Take mean across K runs
@@ -108,6 +122,3 @@ ax1.legend(loc='upper left', frameon=False)
 plt.title("Gains from Trade")
 plt.tight_layout()
 plt.show()
-
-
-
