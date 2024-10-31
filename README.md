@@ -1,28 +1,15 @@
-Need to work on requirements.txt file
+# An Agent-Based Model for Assessing Agricultural Water Market Structure and Function
 
-
-with the citation file, will show once release created
-Learn how to organize for public viewing
-
-We can also have 2 versions, one for HPC, and one without multithreading
-
-Sources for creating readme:
-https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/
-https://docs.github.com/en/contributing/style-guide-and-content-model/style-guide
-https://github.com/projectmesa/mesa-examples/tree/main/examples/schelling
-
-# Agent-Based Water Trading Model
-An agent-based model of agricultural water markets under appropriative rights and droughts. Includes bilateral and multilateral trading structures. 
 
 ## Description
-The model is developed to simulate possible water rights trading between water rights holders drawing water from a river for agricultural purposes. Depending upon the severity of the drought, certain water rights are curtailed for that season. Using Bilateral (random matching of water rights holders) and Smart Market (active matching of water rights holders by a market manager) trade frameworks, the ABM simulates interactions between water rights holders and figures the most efficient condition to generate maximum gains from trade. Focusing on non-pecuniary factors that might affect trading decisions, a dynamic structure to the general model has been developed to study the economic impacts caused due to preferences of water right holders not to participate in agricultural water markets.
+An agent-based model (ABM) is developed to simulate irrigation water rights leasing at  watershed scale in response to drought. The model allows for variation in farm characteristics, water rights seniority, diversion location in the watershed, differences in agent preferences and information, and alternative market frameworks. The model is used to examine the effect of drought on trading activity and gains from trade under three  market models: Bilateral trading with random matching, a “Smart Market” that actively matches bidders based on their bids and asks, and a full-information optimization trading that represents the efficient benchmark against which to assess other market models. The effect of non-pecuniary factors such as preferences for active farming versus leasing and fallowing is also simulated. The results show several patterns.  Gains from trade and market participation are largest with moderate drought severity than with either severe or weak drought. Gains from trade and trading activity are also highest when bids and offers are matched by full information optimization approach, and when senior water rights holders prefer active farming to lease and fallow. The applications presented in this paper illustrate the broad applicability of the ABM framework to water resource problems under appropriative water rights systems of the Western United States. 
 
 ## Getting Started
 https://mesa.readthedocs.io/en/stable/best-practices.html
 ### Dependencies
 
 * MESA package (https://mesa.readthedocs.io/en/stable/overview.html)
-* ex. Windows 10
+
 
 ### Installing
 
@@ -31,11 +18,12 @@ https://mesa.readthedocs.io/en/stable/best-practices.html
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
+1. Download requirements into environment
 ```
-code blocks for commands
+pip install -r requirements.txt
 ```
+2. Locate main.py file
+  * set N=500, K=100
 
 ## Help
 
@@ -49,28 +37,25 @@ command to run if program contains helper info
 ## Example
 
 
-## Authors
-name@wsu.edu
+## Corresponding Repository Authors
+* jacob.gifford1@wsu.edu
+  
+* rb1133@uah.edu
 
-## Further Reading
 
+
+
+## Publication Link
+*
 ## Version History
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
+* 1.0
+  
+    * 
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
 ## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+* Center for Institutional Research Computing at Washington State University
