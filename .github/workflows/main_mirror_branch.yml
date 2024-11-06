@@ -16,9 +16,6 @@ jobs:
           fetch-depth: 0
 
       - name: Push to public repository
-        env:
-          PUBLIC_REPO: https://github.com/jgifford01/WaterMarket_ABM.git
-          PAT: ${{ secrets.PAT_PUBLIC_REPO }}
         run: |
-          git remote add public https://jgifford01:${PAT}@github.com/jgifford01/WaterMarket_ABM.git
+          git remote add public https://jgifford01:${{ secrets.PAT_PUBLIC_REPO }}@github.com/jgifford01/WaterMarket_ABM.git
           git push -u public main --force
