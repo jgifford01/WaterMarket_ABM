@@ -44,8 +44,7 @@ pip install -r requirements.txt
 * Not available yet
 ## Version History
 
-* 1.0
-  - initial release for journal submission.
+* 1.0 - initial release for journal submission with core functionality.
 
 ## License
 
