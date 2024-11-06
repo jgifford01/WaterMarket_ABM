@@ -33,9 +33,9 @@ pip install -r requirements.txt
   * Ensure folders are named correctly before running the figure scripts. Note that some of the profit max figure scripts run from a data folder titled "####agents_seed####".
 
 ## Corresponding Repository Authors
-* jacob.gifford1@wsu.edu
+* Jacob Gifford: jacob.gifford1@wsu.edu
   
-* rb1133@uah.edu
+* Reetwika Basu: rb1133@uah.edu
 
 
 
