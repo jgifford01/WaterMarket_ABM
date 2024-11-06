@@ -16,9 +16,9 @@ class WaterAgent(Agent):
         self.sigma = sigma
         self.trib_vector =trib_vector 
 
-    @classmethod
+    @classmethod # blueprint for creating agent i
     def create_agent(cls, unique_id, model, aw, alphaw, betaw, cbar0, stream_complexity):
-        acreage = 1 #aw * np.random.rand() + 1 // this allows for the GFT to be accurate to paper
+        acreage = 1 
         alpha = alphaw * np.random.uniform(20, 40)
         beta = betaw * np.random.uniform(1, 2)
         cbar = alpha / (2 * beta)

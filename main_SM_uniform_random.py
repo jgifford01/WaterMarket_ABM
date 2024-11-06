@@ -63,7 +63,7 @@ if __name__ == '__main__':
     start_time = time.time()
     
     # Number of CPU cores to use
-    num_cores = 40  # Adjust as needed or set dynamically with os.cpu_count()
+    num_cores = 1  # Adjust as needed or set dynamically with os.cpu_count()
     print("Running on num cores =", num_cores)
 
     # Launch parallel tasks

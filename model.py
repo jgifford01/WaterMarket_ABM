@@ -33,9 +33,6 @@ class TradingModel(Model):
         self.create_agents()
         self.initialize_model()
         
-
-
-    
     
     def create_agents(self):      
         self.schedule = RandomActivation(self)
@@ -44,18 +41,18 @@ class TradingModel(Model):
         np.random.seed(self.random_seed)
         for i in range(1, self.N + 1):
             agent = WaterAgent.create_agent(i, self, self.aw, self.alphaw, 
-                                            self.betaw, self.cbar0, self.stream_complexity)
+                                            self.betaw, self.cbar0, self.stream_complexity) # instantiate agent
             self.schedule.add(agent)
             self.agents_list.append(agent)
             
-        ACbar = np.cumsum([agent.acbar for agent in self.schedule.agents])
-        sigma_array = ACbar/ACbar[-1]
+        ACbar = np.cumsum([agent.acbar for agent in self.schedule.agents]) # cumulative sum of cbar, acreage =1 for all agents
+        sigma_array = ACbar/ACbar[-1] # ranked cumuluative sum of cbar divided by total cbar sum.
         
         
         
         for agent in self.schedule.agents:
             agent.sigma = sigma_array[agent.unique_id - 1]
-            agent.pro = 1 if agent.sigma <= self.P else 0
+            agent.pro = 1 if agent.sigma <= self.P else 0    # decides if junior or senior
             agent.c = agent.cbar*agent.pro
             
             # add non-pecuniary preferences if non_pec_prefs_ind is True
@@ -72,32 +69,32 @@ class TradingModel(Model):
                 pec_pref_array = np.ones(self.N)
 
 
-            agent.non_pec_pref = pec_pref_array[agent.unique_id - 1]
+            agent.non_pec_pref = pec_pref_array[agent.unique_id - 1] # mapping from seniority into the preference linear space
              
             # add bidmax and askmax
             agent.wtp_wta_max = agent.cbar*(agent.alpha-agent.beta*agent.cbar)
             agent.bidmax = agent.wtp_wta_max*(1-self.gamma*(1-self.P))*agent.non_pec_pref # (1-self.P) is curtailment rate
             agent.askmax = agent.wtp_wta_max*(1+self.gamma*(1-self.P))*agent.non_pec_pref # if a seller has a 10x weighted ask, then the buyer has wants to be compensated 10x more than if they were pmax 
-            agent.unitbidmax = agent.bidmax/agent.cbar 
-            agent.unitaskmax = agent.askmax/agent.cbar
+            agent.unitbidmax = agent.bidmax/agent.cbar # average value at cbar
+            agent.unitaskmax = agent.askmax/agent.cbar # average value at cbar
 
 
     def initialize_model(self):
-        self.GFT = 0
-        self.GFT_array = []
-        self.catalog_of_buyers = [agent for agent in self.agents_list if agent.pro == 0]
-        self.catalog_of_sellers = [agent for agent in self.agents_list if agent.pro == 1]
+        self.GFT = 0 # GFT initialization
+        self.GFT_array = [] # collector for GFT
+        self.catalog_of_buyers = [agent for agent in self.agents_list if agent.pro == 0] # sets list of buyers
+        self.catalog_of_sellers = [agent for agent in self.agents_list if agent.pro == 1] # sets list of sellers
         self.datacollector = DataCollector(model_reporters={"GFT_array": lambda m: m.GFT_array})
 
 
 
 
         if self.smart_market_ind:
-            self.catalog_of_buyers.sort(key=lambda agent: agent.unitbidmax, reverse=True)
+            self.catalog_of_buyers.sort(key=lambda agent: agent.unitbidmax, reverse=True)   # smart market average value ordering
             self.catalog_of_sellers.sort(key=lambda agent: agent.unitaskmax, reverse=False)
         
         if self.bilateral_market_ind:
-            rng_state = np.random.get_state()
+            rng_state = np.random.get_state()    # bilateral random shuffle
             np.random.seed()
             np.random.shuffle(self.catalog_of_buyers)
             np.random.shuffle(self.catalog_of_sellers)
@@ -149,7 +146,6 @@ class TradingModel(Model):
 
         # create cumulative water value data pretrade #
         if self.smart_market_ind == True:
-                #print("TV0: ", TV0, "P: ", self.P)
                 TV0 = np.sum([agent.c * (agent.alpha - agent.beta * agent.c) for agent in self.schedule.agents])
                 # Open the CSV file in append mode
                 with open(f"data/{self.N}agents_seed{self.random_seed}/watervalue.csv", mode='a', newline='') as file:
@@ -214,9 +210,7 @@ class TradingModel(Model):
                     
                     if x > 0:
                         price = ((bid + ask) / 2) #### price  of one unit transferred
-                        #print("price: ", price)
                         price_collection_array.append(price)
-
                 else:
                     continue
 
@@ -341,29 +335,6 @@ class TradingModel(Model):
         tot_gft = np.sum(gains_from_trade)
         self.GFT = tot_gft
 
-        """
-        ######## figuring out the full info lagrangian
-        # into dataframe
-        df = pd.DataFrame(columns = [ 'alpha', 'beta','c_init' ,'c_opt', 'mu', 'theta', 'MV', 'lhs', 'lagrange_multiplier_CPP'])
-        df['alpha'] = alpha_array
-        df['beta'] = beta_array
-        df['c_init'] = c_init
-        df['c_opt'] = c_opt.value
-        df['mu'] = prob.constraints[2].dual_value
-        df['theta'] = prob.constraints[1].dual_value
-        df['MV'] = alpha_array - 2* beta_array * (c_opt.value)
-        df['lhs'] = df['MV'] - df['theta'] + df['mu']
-        df['lagrange_multiplier_CPP'] = prob.constraints[0].dual_value
-        
-
-        # print full matrix20 column s
-        pd.set_option('display.max_columns', 20)
-        print('df', df)
-
-
-        ######################
-        """
-
         # compute theta + lambda stats
         theta_plus_lambda = prob.constraints[0].dual_value + prob.constraints[1].dual_value
         mean_theta_plus_lambda = np.mean(theta_plus_lambda)
@@ -372,18 +343,8 @@ class TradingModel(Model):
         percentile_25_theta_plus_lambda = np.percentile(theta_plus_lambda, 25)
         percentile_75_theta_plus_lambda = np.percentile(theta_plus_lambda, 75)
 
-
-
-
-
-
-
-
-
-
-
         
-        epsilon = 1e-4  # Define your epsilon tolerance
+        epsilon = 1e-4  # Define epsilon tolerance
 
         #Count how many agents are trading using an epsilon tolerance
         num_trading_agents = np.sum(np.abs(c_init - c_opt_value) > epsilon)
@@ -410,14 +371,7 @@ class TradingModel(Model):
             # Write the P and lagrange multiplier plus theta values to the CSV file
             writer.writerow([self.P, mean_theta_plus_lambda, min_theta_plus_lambda, max_theta_plus_lambda, percentile_25_theta_plus_lambda, percentile_75_theta_plus_lambda])
         
-
-
-
-    
         return 
-
-
-
 
     def step(self):
         # Schedule step function for all agents

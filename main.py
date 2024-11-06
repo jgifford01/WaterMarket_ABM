@@ -26,6 +26,7 @@ random_seed =  3145 #  3145 for N=500 K=100
 
 non_pec_prefs_ind = 2 #####  0 => pmax, 1 => Uniform Random, 2 => Seniors prefer farming (10.0 to 0.1)
 
+cores_num = 1 # Number of cores to use for parallel processing/single threading
 
 # x x x x x x x x x x x x x x x x x x x x x x x x
 # x x x x x x x x x x x x x x x x x x x x x x x x
@@ -36,10 +37,6 @@ cbar0 = 1
 GFT_final_array = np.full((3, 101, K), np.nan) # Array for storing the gains from trade results, initialized with NaN
 # x x x x x x x x x x x x x x x x x x x x x x x x 
 # x x x x x x x x x x x x x x x x x x x x x x x x
-
-# TV0 array
-#TV0_array = np.zeros((101, 1))
-
 
 # The functions for parallel processing should be defined outside the main block
 def bilateral_trade_simulation(i, k):
@@ -73,12 +70,12 @@ def cpp_and_sm_simulation(i):
     return i, GFT_cpp, GFT_sm
 
 
-# Main program execution inside the '__main__' block
+# Main program execution
 if __name__ == '__main__':
     # Timing the parallel version
     start_time = time.time()
     # check max number of cores
-    num_cores = 40 #os.cpu_count()
+    num_cores = cores_num #os.cpu_count()
     print("running on num cores =", num_cores)
 
     ################ Parallel Bilateral Market Loop #################
@@ -112,18 +109,12 @@ if __name__ == '__main__':
 
     # Take mean across K runs, ignoring NaN values
     GFT_final_mean_array_k = np.nanmean(GFT_final_array, axis=2)
-    # Compute standard error of the mean estimate, ignoring NaN values
-    #GFT_se_array = np.nanstd(GFT_final_array, axis=2) / np.sqrt(K)
 
-    # Loop over each proration rate
-  
-        # Only consider the Bilateral Market (column 2 of GFT_final_array)
-    
+    # Take range across K runs, ignoring NaN values
     GFT_range_arraymin = np.nanmin(GFT_final_array, axis =2)  # Min of Bilateral Market
     GFT_range_arraymax = np.nanmax(GFT_final_array, axis =2)  # Max of Bilateral Market
 
-
-    # Ensure GFT_range_arraymin and GFT_range_arraymax are 1D arrays
+    # Selecting the Bilateral Market row
     GFT_bi_range_arraymin = GFT_range_arraymin[2, :]  # Selecting the Bilateral Market row
     GFT_bi_range_arraymax = GFT_range_arraymax[2, :]  # Selecting the Bilateral Market row
   
