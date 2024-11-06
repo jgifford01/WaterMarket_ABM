@@ -27,12 +27,10 @@ pip install -r requirements.txt
   * run the "main_SM_uniform_random.py" file
   * data outputs
   * rename data folder as "####agents_seed####_U01_10" if uniform random assignment
-
-5. Note on data management:
-   * If the script is run in parallel, sometimes it writes the headers into the CSV file more than once, this will cause an error in the figure scripts. Clean before running.
-
-5. Running the figure scripts:
-   * Ensure folders are named correctly before running the figure scripts. Note that some of the profit max figure scripts run from a data folder titled "####agents_seed####".
+ 6. Note on data management:
+  * If the script is run in parallel, sometimes it writes the headers into the CSV file more than once, this will cause an error in the figure scripts. Clean before running.
+ 7. Running the figure scripts:
+  * Ensure folders are named correctly before running the figure scripts. Note that some of the profit max figure scripts run from a data folder titled "####agents_seed####".
 
 ## Corresponding Repository Authors
 * jacob.gifford1@wsu.edu
