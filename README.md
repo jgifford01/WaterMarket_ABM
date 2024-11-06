@@ -19,11 +19,14 @@ pip install -r requirements.txt
   * data outputs
   * rename data folder as "####agents_seed####_pmax"
 4. Run the non_pec prefs simulation:
-  * Set non_pec_prefs_ind to 1 for uniform random, or 2 for seniors pref farming:
+  * Set non_pec_prefs_ind to 2 for seniors pref farming:
   * run main.py script
   * data outputs
   * rename data folder as "####agents_seed####_10_01_nonpec" if seniors pref farming
-  * rename data folder as "####agents_seed####_U01_10" if random uniform
+ 5. Run the random uniform prefs simulation:
+  * run the "main_SM_uniform_random.py" file
+  * data outputs
+  * rename data folder as "####agents_seed####_U01_10" if uniform random assignment
 
 5. Note on data management:
    * If the script is run in parallel, sometimes it writes the headers into the CSV file more than once, this will cause an error in the figure scripts. Clean before running.
