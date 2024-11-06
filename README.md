@@ -29,8 +29,7 @@ pip install -r requirements.txt
    * If the script is run in parallel, sometimes it writes the headers into the CSV file more than once, this will cause an error in the figure scripts. Clean before running.
 
 5. Running the figure scripts:
-   * Ensure folding naming is called correctly before running the figure scripts.
-
+   * Ensure folders are named correctly before running the figure scripts. Note that some of the profit max figure scripts run from a data folder titled "####agents_seed####".
 
 ## Corresponding Repository Authors
 * jacob.gifford1@wsu.edu
