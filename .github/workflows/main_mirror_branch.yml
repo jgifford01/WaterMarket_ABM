@@ -14,9 +14,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Push to public repository
+      - name: Configure Git
         run: |
-          git remote add public https://jgifford01:${{ secrets.PAT_PUBLIC_REPO }}@github.com/jgifford01/WaterMarket_ABM.git
-          git push -u public main --force
+          git config --global user.name "Jacob Gifford"
+          git config --global user.email "jacob.gifford1@wsu.edu"
+      - name: Push to public repository
+        env:
+          PAT: ${{ secrets.PAT_PUBLIC_REPO }}
+        run: |
+          git remote add public https://$PAT@github.com/jgifford01/WaterMarket_ABM.git
+          git push public main --force
 
