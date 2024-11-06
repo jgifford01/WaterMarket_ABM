@@ -90,6 +90,11 @@ fig, axes = plt.subplots(1, 3, figsize=(6.5, 2.8),constrained_layout=True)  # Ad
 
 ax1 = axes[0]
 
+# find total value at p=1
+TVP1 = water_value_no_trade_plot2[-1, 1]
+
+
+""" Full value
 # Plot the three market types
 sns.lineplot(x=proration_rate_plot1, y=GFT_final_mean_array_plot1[0, :],
              label="Full information", color='#A0A09F', ax=ax1, legend=False,linewidth=linewidth)
@@ -101,6 +106,19 @@ sns.lineplot(x=proration_rate_plot1, y=GFT_final_mean_array_plot1[2, :],
 # Fill between for range
 ax1.fill_between(proration_rate_plot1, GFT_bi_range_arraymin_plot1, GFT_bi_range_arraymax_plot1,
                  color='#E6F6F1', alpha=0.8, label="Bilateral range")  #
+"""
+# GFT lines divided by TVP1
+# Plot the three market types
+sns.lineplot(x=proration_rate_plot1, y=GFT_final_mean_array_plot1[0, :]/TVP1,
+             label="Full information", color='#A0A09F', ax=ax1, legend=False,linewidth=linewidth)
+sns.lineplot(x=proration_rate_plot1, y=GFT_final_mean_array_plot1[1, :]/TVP1,
+                label="Smart market", color='#F6DB8C', ax=ax1, legend=False,linewidth=linewidth)
+sns.lineplot(x=proration_rate_plot1, y=GFT_final_mean_array_plot1[2, :]/TVP1,
+                label="Bilateral market", color='#8CD8C0', ax=ax1, legend=False,linewidth=linewidth)
+
+# Fill between for range
+ax1.fill_between(proration_rate_plot1, GFT_bi_range_arraymin_plot1/TVP1, GFT_bi_range_arraymax_plot1/TVP1,
+                    color='#E6F6F1', alpha=0.8, label="Bilateral range")  #
 
 # Customize axes
 #ax1.set_xlabel("Proration rate", color='black', fontsize=10)
@@ -121,7 +139,7 @@ ax1.tick_params(axis='y', labelsize=fontlabelsize)
 #ax1.set_yticks(np.linspace(0, 3200, num=20))
 
 # plot title
-ax1.set_title("GFT over total value | δ=1", fontsize=fontlabelsize)
+ax1.set_title("GFT over pre-trade value | δ=1", fontsize=fontlabelsize)
 
 # --------------------------- Plot 2: GFT/TV0 Plot ---------------------------
 
@@ -157,7 +175,7 @@ ax2.yaxis.set_major_formatter(mticker.FormatStrFormatter('%.1f'))
 ax2.set_yticks(np.linspace(0, 2, num=6))
 
 # add plot title
-ax2.set_title("GFT over pre-trade value", fontsize=fontlabelsize)
+ax2.set_title("GFT over pre-trade value | δ", fontsize=fontlabelsize)
 
 # --------------------------- Plot 3: Number of Agents Trading Over Usable Rights ---------------------------
 
@@ -254,7 +272,7 @@ plt.subplots_adjust(left = 0.0, right = 1, wspace=0.2)  # Adjust the width space
 # Save the combined figure
 combined_plot_path = os.path.join(plots_dir, "3_panel_facet.png")
 plt.savefig(combined_plot_path, dpi=300, bbox_inches='tight')  # Adjust DPI as needed
-plt.show()
+
 
 # save as svg
 plt.savefig(os.path.join(plots_dir, "3_panel_facet.svg"), format='svg', dpi=1000, bbox_inches='tight')  # Adjust DPI as needed

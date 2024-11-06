@@ -38,8 +38,8 @@ fig, axes = plt.subplots(1, 3, figsize=(6.5, 2.8), constrained_layout=True)
 
 # Titles for each subplot
 subplot_titles = [
-    "GFT/no-drought value",
-    "GFT/pre-trade value",
+    "GFT over pre-trade value | δ=1",
+    "GFT over pre-trade value | δ",
     "Fraction of agents trading"
 ]
 
@@ -76,15 +76,16 @@ for i, (title, mean, max_val) in enumerate(zip(subplot_titles, mean_values.value
         spine.set_linewidth(1.5)
 
 # Custom legend for categories
+pref_10_01_mean_patch = mpatches.Patch(color='#CC444B', label='Mean 10 to 0.1')
+pref_10_01_max_patch = mpatches.Patch(color='#F28E8E', label='Max 10 to 0.1')
 U_01_10_mean_patch = mpatches.Patch(color='#1D5EA8', label='Mean U(0.1 to 10) mean')
 U_01_10_max_patch = mpatches.Patch(color='#A3C4F3', label='Max U(0.1 to 10)')
 Profit_max_mean_patch = mpatches.Patch(color='#F6DB8C', label='Mean profit max')
 Profit_max_max_patch = mpatches.Patch(color='#FFF2CC', label='Max profit max')
-pref_10_01_mean_patch = mpatches.Patch(color='#CC444B', label='Mean 10 to 0.1')
-pref_10_01_max_patch = mpatches.Patch(color='#F28E8E', label='Max 10 to 0.1')
+
 
 # Shared legend at the bottom
-fig.legend(handles=[U_01_10_mean_patch, U_01_10_max_patch, Profit_max_mean_patch, Profit_max_max_patch, pref_10_01_mean_patch, pref_10_01_max_patch],
+fig.legend(handles=[pref_10_01_mean_patch, pref_10_01_max_patch, U_01_10_mean_patch, U_01_10_max_patch, Profit_max_mean_patch, Profit_max_max_patch],
            loc='lower center', ncol=3, frameon=False, fontsize=fontlabelsize, bbox_to_anchor=(0.5, -0.15))
 
 # Save and display the figure with specified filenames

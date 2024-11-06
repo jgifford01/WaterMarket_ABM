@@ -62,20 +62,33 @@ fig, axes = plt.subplots(1, 3, figsize=(6.5, 2.8), constrained_layout=True)
 proration_rate_plot1 = np.linspace(0, 1, min_length)
 
 # --------------------------- Plot 1: Gains from Trade (GFT) Plot ---------------------------
+# TVP1 compute
+TVP1 = 80548.37250442934 ## replace if run with different sim seed values
 
+""" full value
 ax1 = axes[0]
 sns.lineplot(x=proration_rate_plot1, y=data_10to01_mean, label="10 to 0.1", color='#CC444B', ax=ax1, linewidth=linewidth, legend=False)
 sns.lineplot(x=proration_rate_plot1, y=data_U_mean, label="U(0.1 to 10) mean", color='#094074', ax=ax1, linewidth=linewidth, legend=False)
 ax1.fill_between(proration_rate_plot1, data_U_min, data_U_max, color='#094074', label = "U(0.1,10) range",alpha=0.2)
 sns.lineplot(x=proration_rate_plot1, y=data_pmax_mean, label="Profit maximization", color='#F6DB8C', ax=ax1, linewidth=linewidth, legend=False)
+"""
+# value over pretrade nodrought value
+ax1 = axes[0]
+sns.lineplot(x=proration_rate_plot1, y=data_10to01_mean/TVP1, label="10 to 0.1", color='#CC444B', ax=ax1, linewidth=linewidth, legend=False)
+sns.lineplot(x=proration_rate_plot1, y=data_U_mean/TVP1, label="U(0.1 to 10) mean", color='#094074', ax=ax1, linewidth=linewidth, legend=False)
+ax1.fill_between(proration_rate_plot1, data_U_min/TVP1, data_U_max/TVP1, color='#094074', label = "U(0.1,10) range",alpha=0.2)
+sns.lineplot(x=proration_rate_plot1, y=data_pmax_mean/TVP1, label="Profit maximization", color='#F6DB8C', ax=ax1, linewidth=linewidth, legend=False)
 
-ax1.set_title("Gains from trade (GFT)", fontsize=fontlabelsize)
+
+
+ax1.set_title("GFT over pre-trade value | δ=1", fontsize=fontlabelsize)
 ax1.set_xlim(0, 1)
 ax1.set_xlabel("Water availability index", fontsize=fontlabelsize)
 ax1.tick_params(axis='y', labelsize=fontlabelsize)
 ax1.set_xticklabels([f"{x:.1f}" for x in ax1.get_xticks()], fontsize=fontlabelsize)  # Labels as decimal
 ax1.xaxis.set_major_formatter(mticker.FormatStrFormatter('%.1f'))
 ax1.set_ylabel("")
+
 
 # --------------------------- Plot 2: GFT/TV0 Plot ---------------------------
 
@@ -84,7 +97,7 @@ sns.lineplot(x=water_value_no_trade[:, 0], y=GFT_SM_preffarm_TV0, label="10 to 0
 sns.lineplot(x=water_value_no_trade[:, 0], y=GFT_SM_profmax_TV0, label="Profit Maximization", color='#F6DB8C', ax=ax2, linewidth=linewidth, legend=False)
 sns.lineplot(x=water_value_no_trade[:, 0], y=GFT_SM_U_TV0, label="Mean U(0.1,10)", color='#094074', ax=ax2, linewidth=linewidth, legend=False)
 ax2.fill_between(water_value_no_trade[:, 0], GFT_SM_U_min_TV0, GFT_SM_U_max_TV0, label = "U(0.1,10) range",color='#094074', alpha=0.2)
-ax2.set_title("GFT over pre-trade value", fontsize=fontlabelsize)
+ax2.set_title("GFT over pre-trade value | δ", fontsize=fontlabelsize)
 ax2.set_xlabel("Water availability index", fontsize=fontlabelsize)
 ax2.set_xlim(0, 1)
 ax2.set_ylim(0, 0.8)

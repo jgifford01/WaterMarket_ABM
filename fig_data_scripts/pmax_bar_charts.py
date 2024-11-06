@@ -38,8 +38,8 @@ fig, axes = plt.subplots(1, 3, figsize=(6.5, 2.8), constrained_layout=True)
 
 # Titles for each subplot
 subplot_titles = [
-    "GFT/no-drought water value",
-    "GFT/available water value",
+    "GFT over pre-trade value | δ=1",
+    "GFT over pre-trade value | δ",
     "Fraction of agents trading"
 ]
 
