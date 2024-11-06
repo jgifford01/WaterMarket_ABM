@@ -20,7 +20,7 @@ pip install -r requirements.txt
   * rename data folder as "####agents_seed####_pmax"
 4. Run the non_pec prefs simulation:
   * Set non_pec_prefs_ind to 2 for seniors pref farming:
-  * run main.py script
+  * run main.py scriptaa
   * data outputs
   * rename data folder as "####agents_seed####_10_01_nonpec" if seniors pref farming
  5. Run the random uniform prefs simulation:
