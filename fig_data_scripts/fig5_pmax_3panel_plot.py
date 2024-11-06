@@ -121,7 +121,7 @@ ax1.tick_params(axis='y', labelsize=fontlabelsize)
 #ax1.set_yticks(np.linspace(0, 3200, num=20))
 
 # plot title
-ax1.set_title("Gains from trade (GFT)", fontsize=fontlabelsize)
+ax1.set_title("GFT over total value | δ=1", fontsize=fontlabelsize)
 
 # --------------------------- Plot 2: GFT/TV0 Plot ---------------------------
 
