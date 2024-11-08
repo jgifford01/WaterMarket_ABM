@@ -18,7 +18,7 @@ import csv
 
 K = 100 # Number of iterations for each P: 100 as presented in paper
 N = 500 # Number of agents: 500 as presented in paper
-stream_complexity = 4 # 4 as presented in paper
+stream_complexity = 4 # 4 as presented in paper, this corresponds to b^{5}
 gamma = 0 # 0 as presented in paper
 aw = 1 # we are currently setting acreage to one (non random)
 
