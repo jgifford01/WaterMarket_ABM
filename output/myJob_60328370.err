@@ -1,0 +1,8 @@
+/var/spool/slurmd/job60328370/slurm_script: line 16: myenv/bin/activate: No such file or directory
+Traceback (most recent call last):
+  File "/home/jacob.gifford1/WaterMarket_ABM/main.py", line 4, in <module>
+    from model import TradingModel
+  File "/home/jacob.gifford1/WaterMarket_ABM/model.py", line 1, in <module>
+    from mesa import  Model
+ModuleNotFoundError: No module named 'mesa'
+/var/spool/slurmd/job60328370/slurm_script: line 21: deactivate: command not found

@@ -16,20 +16,20 @@ import csv
 #################################################
 
 
-K = 10 # Number of iterations for each P: 100 as presented in paper
-N = 50 # Number of agents: 500 as presented in paper
+K = 100 # Number of iterations for each P: 100 as presented in paper
+N = 500 # Number of agents: 500 as presented in paper
 sigma = 4 # stream complexity or watershed max dimension
 gamma = 0 # 0 as presented in paper
 aw = 1 # we are currently setting acreage to one (non random)
 random_seed =  3145 #  3145 for N=500 K=100 
 non_pec_prefs_ind = 2 #####  0 => pmax, 1 => Uniform Random, 2 => Seniors prefer farming (10.0 to 0.1)
-cores_num = 1 # Number of cores to use for parallel processing/single threading
+cores_num = 40 # Number of cores to use for parallel processing/single threading
 
 # x x x x x x x x x x x x x x x x x x x x x x x x
 # x x x x x x x x x x x x x x x x x x x x x x x x
 # Don't touch these values 
 alphaw = 1 
-stream_complexity = sigma - 1 
+stream_complexity = sigma - 1 # stochastic component of stream complexity
 betaw = 1 
 cbar0 = 1 
 GFT_final_array = np.full((3, 101, K), np.nan) # Array for storing the gains from trade results, initialized with NaN
