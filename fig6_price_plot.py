@@ -78,7 +78,7 @@ ax.plot(SM_prices['P'], SM_prices['75th_percentile_price'], color=color_sm, line
 
 
 # Customize axes
-ax.set_xlabel("Water availability index", color='black', fontsize=fontlabelsize)
+ax.set_xlabel("Water availability index (δ)", color='black', fontsize=fontlabelsize)
 ax.set_ylabel("Price", color='black', fontsize=fontlabelsize)
 ax.tick_params(axis='y', labelcolor='black')
 ax.set_xlim(0, 1)

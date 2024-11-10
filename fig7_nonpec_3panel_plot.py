@@ -68,9 +68,9 @@ TVP1 = 80128.190760988 ## replace if run with different sim seed values
 
 # value over pretrade nodrought value
 ax1 = axes[0]
-sns.lineplot(x=proration_rate_plot1, y=data_10to01_mean/TVP1, label="10 to 0.1", color='#CC444B', ax=ax1, linewidth=linewidth, legend=False)
-sns.lineplot(x=proration_rate_plot1, y=data_U_mean/TVP1, label="U(0.1 to 10) mean", color='#094074', ax=ax1, linewidth=linewidth, legend=False)
-ax1.fill_between(proration_rate_plot1, data_U_min/TVP1, data_U_max/TVP1, color='#094074', label = "U(0.1,10) range",alpha=0.2)
+sns.lineplot(x=proration_rate_plot1, y=data_10to01_mean/TVP1, label="Seniority-based prefs", color='#CC444B', ax=ax1, linewidth=linewidth, legend=False)
+sns.lineplot(x=proration_rate_plot1, y=data_U_mean/TVP1, label="Random prefs mean", color='#094074', ax=ax1, linewidth=linewidth, legend=False)
+ax1.fill_between(proration_rate_plot1, data_U_min/TVP1, data_U_max/TVP1, color='#094074', label = "Random prefs range",alpha=0.2)
 sns.lineplot(x=proration_rate_plot1, y=data_pmax_mean/TVP1, label="Profit maximization", color='#F6DB8C', ax=ax1, linewidth=linewidth, legend=False)
 
 # stats
@@ -80,7 +80,7 @@ print("mean GFT_SM_pmax_TV1|delta=1", data_pmax_mean.mean()/TVP1, "max GFT_SM_pm
 
 ax1.set_title("GFT over pre-trade value | δ=1", fontsize=fontlabelsize)
 ax1.set_xlim(0, 1)
-ax1.set_xlabel("Water availability index", fontsize=fontlabelsize)
+ax1.set_xlabel("Water availability index (δ)", fontsize=fontlabelsize)
 ax1.tick_params(axis='y', labelsize=fontlabelsize)
 ax1.set_xticklabels([f"{x:.2f}" for x in ax1.get_xticks()], fontsize=fontlabelsize)  # Labels as decimal
 ax1.xaxis.set_major_formatter(mticker.FormatStrFormatter('%.1f'))
@@ -97,7 +97,7 @@ sns.lineplot(x=water_value_no_trade[:, 0], y=GFT_SM_profmax_TV0, label="Profit M
 sns.lineplot(x=water_value_no_trade[:, 0], y=GFT_SM_U_TV0, label="Mean U(0.1,10)", color='#094074', ax=ax2, linewidth=linewidth, legend=False)
 ax2.fill_between(water_value_no_trade[:, 0], GFT_SM_U_min_TV0, GFT_SM_U_max_TV0, label = "U(0.1,10) range",color='#094074', alpha=0.2)
 ax2.set_title("GFT over pre-trade value | δ", fontsize=fontlabelsize)
-ax2.set_xlabel("Water availability index", fontsize=fontlabelsize)
+ax2.set_xlabel("Water availability index (δ)", fontsize=fontlabelsize)
 ax2.set_xlim(0, 1)
 ax2.set_ylim(0,)
 ax2.yaxis.set_major_formatter(mticker.FormatStrFormatter('%.2f'))
@@ -120,7 +120,7 @@ sns.lineplot(x=num_trading_agents_profmax['P'], y=num_trading_agents_profmax['nu
 sns.lineplot(x=num_trading_agents_U['P'], y=num_trading_agents_U['num_trading_agents_SM']['mean']/agent_number, label="U(0.1,10)", color='#094074', ax=ax3, linewidth=linewidth, legend=False)
 ax3.fill_between(num_trading_agents_U['P'], num_trading_agents_U['num_trading_agents_SM']['min']/agent_number, num_trading_agents_U['num_trading_agents_SM']['max']/agent_number, label = "U(0.1,10) range",color='#094074', alpha=0.2)
 ax3.set_title("Fraction of agents trading", fontsize=fontlabelsize)
-ax3.set_xlabel("Water availability index", fontsize=fontlabelsize)
+ax3.set_xlabel("Water availability index (δ)", fontsize=fontlabelsize)
 ax3.set_ylim(0,)
 ax3.set_xlim(0, 1)
 ax3.xaxis.set_major_formatter(mticker.FormatStrFormatter('%.1f'))
@@ -154,7 +154,7 @@ ax3.grid(True, color='lightgray', linestyle='-', linewidth=0.5)
 
 # --------------------------- Shared Legend -----------------------------------
 handles, labels = ax1.get_legend_handles_labels()
-fig.legend(handles, labels, loc='lower center', ncol=4, frameon=False, fontsize=fontlabelsize, bbox_to_anchor=(0.5, -0.1))
+fig.legend(handles, labels, loc='lower center', ncol=3, frameon=False, fontsize=fontlabelsize, bbox_to_anchor=(0.5, -0.15))
 
 # Apply grid and spine adjustments
 for ax in axes:
@@ -169,4 +169,6 @@ plt.subplots_adjust(left = 0.0, right = 1, wspace=0.3)  # Adjust the width space
 combined_plot_path = os.path.join(plots_dir, "3_panel_facet_nonpec.png")
 plt.savefig(combined_plot_path, dpi=300, bbox_inches='tight')
 plt.savefig(f"{plots_dir}/3_panel_facet_nonpec.svg", format='svg', dpi=1000, bbox_inches='tight')
-plt.show()
+
+
+

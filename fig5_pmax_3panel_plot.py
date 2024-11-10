@@ -130,7 +130,7 @@ ax1.set_ylim(0, )
 ax1.set_xlim(0, 1)
 ax1.set_xticks(np.linspace(0, 1, num=6))
 ax1.set_xticklabels([f"{x:.1f}" for x in ax1.get_xticks()], fontsize=fontlabelsize)  # Labels as decimal
-ax1.set_xlabel("Water availability index", color='black', fontsize=fontlabelsize)
+ax1.set_xlabel("Water availability index (δ)", color='black', fontsize=fontlabelsize)
 
 
 # set y-axis labels fontsize
@@ -158,7 +158,7 @@ ax2.fill_between(water_value_no_trade_plot2[:, 0], range_min_TVO_plot2, range_ma
                  color='#E6F6F1', alpha=0.8, label="_nolegend_")
 
 # Customize axes
-ax2.set_xlabel("Water availability index", color='black', fontsize=fontlabelsize)
+ax2.set_xlabel("Water availability index (δ)", color='black', fontsize=fontlabelsize)
 #ax2.set_ylabel("GFT/TV0", color='black', fontsize=10)
 ax2.tick_params(axis='y', labelcolor='black')
 ax2.set_ylim(0,  )
@@ -212,7 +212,7 @@ ax3.set_xlim(0, 1)
 # Set x-axis from 0 to 1 without percentage labels
 ax3.set_xticks(np.linspace(0, 1, num=6))
 ax3.set_xticklabels([f"{x:.1f}" for x in ax3.get_xticks()], fontsize=fontlabelsize)  # Labels as decimal
-ax3.set_xlabel("Water availability index", color='black', fontsize=fontlabelsize)
+ax3.set_xlabel("Water availability index (δ)", color='black', fontsize=fontlabelsize)
 # set y-axis labels fontsize
 ax3.tick_params(axis='y', labelsize=fontlabelsize)
 

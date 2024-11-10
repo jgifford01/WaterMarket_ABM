@@ -76,10 +76,10 @@ for i, (title, mean, max_val) in enumerate(zip(subplot_titles, mean_values.value
         spine.set_linewidth(1.5)
 
 # Custom legend for categories
-pref_10_01_mean_patch = mpatches.Patch(color='#CC444B', label='Mean 10 to 0.1')
-pref_10_01_max_patch = mpatches.Patch(color='#F28E8E', label='Max 10 to 0.1')
-U_01_10_mean_patch = mpatches.Patch(color='#1D5EA8', label='Mean U(0.1 to 10) mean')
-U_01_10_max_patch = mpatches.Patch(color='#A3C4F3', label='Max U(0.1 to 10)')
+pref_10_01_mean_patch = mpatches.Patch(color='#CC444B', label='Mean sen.-based prefs')
+pref_10_01_max_patch = mpatches.Patch(color='#F28E8E', label='Max sen.-based prefs')
+U_01_10_mean_patch = mpatches.Patch(color='#1D5EA8', label='Mean random prefs')
+U_01_10_max_patch = mpatches.Patch(color='#A3C4F3', label='Max random prefs')
 Profit_max_mean_patch = mpatches.Patch(color='#F6DB8C', label='Mean profit max')
 Profit_max_max_patch = mpatches.Patch(color='#FFF2CC', label='Max profit max')
 
