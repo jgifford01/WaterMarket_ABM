@@ -17,7 +17,15 @@ source venv/bin/activate
 module load python3		# Load software module from Kamiak repository
 
 
-python main.py
+#python main.py
+#python main_SM_uniform_random.py
+#python fig4_sup_dem_plot.py
+#python fig5_pmax_3panel_plot.py
+#python summary_stats.py
+#python pmax_bar_charts.py
+#python fig6_price_plot.py
+#python fig7_nonpec_3panel_plot.py
+python non_pec_bar_charts.py
 deactivate
 
 echo "Completed job on node $HOSTNAME"

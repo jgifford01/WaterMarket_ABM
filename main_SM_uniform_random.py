@@ -1,7 +1,7 @@
 #################################################
 ################## Libraries ###################
 #################################################
-from model_SM_U01_10 import TradingModel
+from model_SM_uniform_random import TradingModel
 import numpy as np
 import matplotlib.pyplot as plt
 import time
@@ -18,12 +18,13 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 K = 100  # Number of iterations for each P: 100 as presented in paper
 N = 500  # Number of agents: 500 as presented in paper
-stream_complexity = 4  # 4 as presented in paper
+sigma_complexity = 4  # stream complexity or watershed max dimension
+
 gamma = 0  # 0 as presented in paper
 aw = 1  # we are currently setting acreage to one (non random)
 
 random_seed = 3145  # 3145 for N=500 K=100
-
+cores = 40  # Number of CPU cores to use
 non_pec_prefs_ind = 1  # 1 => Uniform Random don't touch this value
 
 
@@ -34,6 +35,7 @@ non_pec_prefs_ind = 1  # 1 => Uniform Random don't touch this value
 alphaw = 1 
 betaw = 1 
 cbar0 = 1 
+stream_complexity = sigma_complexity - 1  # stochastic component of stream complexity
 GFT_final_array = np.full((101, K), np.nan) # Array for storing the gains from trade results, initialized with NaN
 # x x x x x x x x x x x x x x x x x x x x x x x x 
 # x x x x x x x x x x x x x x x x x x x x x x x x
@@ -63,7 +65,7 @@ if __name__ == '__main__':
     start_time = time.time()
     
     # Number of CPU cores to use
-    num_cores = 1  # Adjust as needed or set dynamically with os.cpu_count()
+    num_cores = cores  # Adjust as needed or set dynamically with os.cpu_count()
     print("Running on num cores =", num_cores)
 
     # Launch parallel tasks
