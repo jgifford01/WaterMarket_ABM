@@ -84,10 +84,10 @@ for idx, P in enumerate(proration_levels):
 
     
     # Customize axes
-    ax.set_xlabel('Q (thousands)', fontsize=ftsz)
+    ax.set_xlabel('C (thousands)', fontsize=ftsz)
     if idx == 0:
         ax.set_ylabel('WTP/WTA per unit', fontsize=ftsz)  # Only label the y-axis on the first plot
-    ax.set_title(f'{P} WAI', fontsize=ftsz)
+    ax.set_title(f'δ={P}', fontsize=ftsz)
 
     if idx != 0:
         ax.tick_params(left=False, right=False, labelleft=False)  # Remove ticks and labels from the y-axis
