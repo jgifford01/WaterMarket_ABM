@@ -18,12 +18,12 @@ categories = ['Smart Market', 'Bilateral Mean', 'Full Information']
 mean_values = {
     'GFT/no-drought water value': [0.07, 0.04, 0.18],
     'GFT/available water value': [0.22, 0.13, 0.57],
-    'Fraction of agents trading': [0.50, 0.48, 0.97]
+    'Fraction of agents trading': [0.48,0.50, 0.97]
 }
 max_values = {
     'GFT/no-drought water value': [0.11, 0.07, 0.27],
     'GFT/available water value': [0.65, 0.47, 1.71],
-    'Fraction of agents trading': [0.82, 0.77, 1.00]
+    'Fraction of agents trading': [0.77,0.82, 1.00]
 }
 
 # Define colors for each category
