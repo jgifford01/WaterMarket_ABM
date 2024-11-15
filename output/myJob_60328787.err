@@ -1,0 +1,2 @@
+/home/jacob.gifford1/WaterMarket_ABM/fig6_price_plot.py:122: UserWarning: The figure layout has changed to tight
+  plt.tight_layout()

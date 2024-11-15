@@ -1,0 +1,12 @@
+/home/jacob.gifford1/WaterMarket_ABM/fig5_pmax_3panel_plot.py:56: RuntimeWarning: invalid value encountered in divide
+  GFT_bilat_TV0_plot2 = GFT_final_mean_array_plot2[:, 2] / water_value_no_trade_plot2[:, 1]
+/home/jacob.gifford1/WaterMarket_ABM/fig5_pmax_3panel_plot.py:57: RuntimeWarning: invalid value encountered in divide
+  GFT_smart_TV0_plot2 = GFT_final_mean_array_plot2[:, 1] / water_value_no_trade_plot2[:, 1]
+/home/jacob.gifford1/WaterMarket_ABM/fig5_pmax_3panel_plot.py:58: RuntimeWarning: divide by zero encountered in divide
+  GFT_cent_TV0_plot2 = GFT_final_mean_array_plot2[:, 0] / water_value_no_trade_plot2[:, 1]
+/home/jacob.gifford1/WaterMarket_ABM/fig5_pmax_3panel_plot.py:61: RuntimeWarning: invalid value encountered in divide
+  range_min_TVO_plot2 = GFT_bi_range_arraymin_plot1 / water_value_no_trade_plot2[:, 1]
+/home/jacob.gifford1/WaterMarket_ABM/fig5_pmax_3panel_plot.py:62: RuntimeWarning: invalid value encountered in divide
+  range_max_TVO_plot2 = GFT_bi_range_arraymax_plot1 / water_value_no_trade_plot2[:, 1]
+/home/jacob.gifford1/WaterMarket_ABM/fig5_pmax_3panel_plot.py:265: UserWarning: The figure layout has changed to tight
+  plt.tight_layout()

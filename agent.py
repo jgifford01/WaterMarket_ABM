@@ -26,6 +26,6 @@ class WaterAgent(Agent):
         acbar = acreage * cbar
 
         trib_vector = np.concatenate(([1], np.random.binomial(1, 0.5, 
-                                      size=np.random.randint(1, stream_complexity)), 
+                                      size=np.random.randint(0, stream_complexity)), 
                                       [np.random.rand()]))
         return cls(unique_id, model, acreage, alpha, beta, cbar, avbar, acbar, pro=None, c=None, sigma=None, trib_vector=trib_vector)
