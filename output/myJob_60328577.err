@@ -1,4 +1,0 @@
-/home/jacob.gifford1/WaterMarket_ABM/fig7_nonpec_3panel_plot.py:85: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
-  ax1.set_xticklabels([f"{x:.2f}" for x in ax1.get_xticks()], fontsize=fontlabelsize)  # Labels as decimal
-/home/jacob.gifford1/WaterMarket_ABM/fig7_nonpec_3panel_plot.py:165: UserWarning: The figure layout has changed to tight
-  plt.tight_layout()
