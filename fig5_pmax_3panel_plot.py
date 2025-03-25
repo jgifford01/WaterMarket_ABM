@@ -12,7 +12,7 @@ linewidth = 1.5
 # --------------------------- Step 1: Define Parameters and File Paths ---------------------------
 
 # Define your agent number and random seed
-agent_number = 500      # Replace with your actual agent number
+agent_number = 50     # Replace with your actual agent number
 random_seed = 3145         # Replace with your actual random seed
 
 # Define directories
