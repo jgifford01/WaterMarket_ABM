@@ -327,7 +327,7 @@ class TradingModel(Model):
 
         # Define and solve the problem
         prob = cp.Problem(objective, constraints)
-        prob.solve(solver=cp.OSQP, verbose= False)
+        prob.solve(solver=cp.SCS, verbose= False)
         c_opt_value = c_opt.value  # numpy array of optimal values
         # compute GFT
         value_after_trade = (alpha_array * c_opt_value - beta_array * (c_opt_value**2))

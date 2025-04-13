@@ -13,19 +13,17 @@
 ##SBATCH --mem-per-cpu=8G	# Memory per core (gigabytes)
 
 echo "I am job $SLURM_JOBID running on nodes $SLURM_JOB_NODELIST"
-source venv/bin/activate
+source myvenv/bin/activate
 module load python3		# Load software module from Kamiak repository
 
 
 #python main.py
-#python main_SM_uniform_random.py
 #python fig4_sup_dem_plot.py
 #python fig5_pmax_3panel_plot.py
 #python summary_stats.py
 #python pmax_bar_charts.py
 #python fig6_price_plot.py
-#python fig7_nonpec_3panel_plot.py
-python non_pec_bar_charts.py
+python fig_complexitycosts_plot.py
 deactivate
 
 echo "Completed job on node $HOSTNAME"
