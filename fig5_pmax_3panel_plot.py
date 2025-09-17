@@ -12,7 +12,7 @@ linewidth = 1.5
 # --------------------------- Step 1: Define Parameters and File Paths ---------------------------
 
 # Define your agent number and random seed
-agent_number = 50     # Replace with your actual agent number
+agent_number = 500     # Replace with your actual agent number
 random_seed = 3145         # Replace with your actual random seed
 
 # Define directories
@@ -277,3 +277,10 @@ plt.savefig(combined_plot_path, dpi=300, bbox_inches='tight')  # Adjust DPI as n
 
 # save as svg
 plt.savefig(os.path.join(plots_dir, "3_panel_facet.svg"), format='svg', dpi=1000, bbox_inches='tight')  # Adjust DPI as needed
+
+
+# compute mean and max of number of agents trading for the central planner market type
+mean_agents_trading_CP = num_trading_agents_CP_plot3['num_trading_agents_CPP'].mean()/500
+max_agents_trading_CP = num_trading_agents_CP_plot3['num_trading_agents_CPP'].max()/500
+print(f"Mean number of agents trading (Central Planning): {mean_agents_trading_CP}")
+print(f"Max number of agents trading (Central Planning): {max_agents_trading_CP}")
